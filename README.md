@@ -17,13 +17,13 @@ You are tasked with creating a Store Management System
 
 There will be 4 main components in the system:
 
-1. Admin
+- [ ] Admin
 
-2. User (Registered Customer)
+- [ ] User (Registered Customer)
 
-3. Visitor
+- [ ] Visitor
 
-4. Item
+- [ ] Item
 
 ## Admin
 
