@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  unique_id: 1
+  name: MyString
+  brand: MyString
+  category: MyString
+  description: MyText
+  image: MyString
+  special_item: false
+  age_restricted: false
+  quantity: 1
+  cost: 9.99
+  tax_slab: MyString
+  views_count: 1
+
+two:
+  unique_id: 1
+  name: MyString
+  brand: MyString
+  category: MyString
+  description: MyText
+  image: MyString
+  special_item: false
+  age_restricted: false
+  quantity: 1
+  cost: 9.99
+  tax_slab: MyString
+  views_count: 1
