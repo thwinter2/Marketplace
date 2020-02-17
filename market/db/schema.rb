@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_16_032605) do
+ActiveRecord::Schema.define(version: 2020_02_17_014208) do
+
+  create_table "feedbacks", force: :cascade do |t|
+    t.integer "user_id"
+    t.string "visitor_email"
+    t.text "note"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_feedbacks_on_user_id"
+  end
 
   create_table "items", force: :cascade do |t|
     t.integer "unique_id"
@@ -27,6 +36,16 @@ ActiveRecord::Schema.define(version: 2020_02_16_032605) do
     t.integer "views_count"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "purchase_histories", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "item_id", null: false
+    t.string "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_purchase_histories_on_item_id"
+    t.index ["user_id"], name: "index_purchase_histories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -49,4 +68,7 @@ ActiveRecord::Schema.define(version: 2020_02_16_032605) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "feedbacks", "users"
+  add_foreign_key "purchase_histories", "items"
+  add_foreign_key "purchase_histories", "users"
 end
