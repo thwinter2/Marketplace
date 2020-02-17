@@ -13,6 +13,7 @@ class CreateItems < ActiveRecord::Migration[6.0]
       t.decimal :cost
       t.string :tax_slab
       t.integer :views_count
+      t.references :cart
 
       t.timestamps
     end
