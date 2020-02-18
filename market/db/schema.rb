@@ -10,15 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_17_165013) do
+ActiveRecord::Schema.define(version: 2020_02_18_045539) do
 
   create_table "carts", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "item_id", null: false
+    t.integer "user_id"
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["item_id"], name: "index_carts_on_item_id"
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 
@@ -55,13 +53,15 @@ ActiveRecord::Schema.define(version: 2020_02_17_165013) do
     t.decimal "cost"
     t.string "tax_slab"
     t.integer "views_count"
+    t.integer "cart_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["cart_id"], name: "index_items_on_cart_id"
   end
 
   create_table "purchase_histories", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "item_id", null: false
+    t.integer "user_id"
+    t.integer "item_id"
     t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -87,19 +87,20 @@ ActiveRecord::Schema.define(version: 2020_02_17_165013) do
     t.string "wishlist"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
   create_table "wishlists", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.integer "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
-  add_foreign_key "carts", "items"
-  add_foreign_key "carts", "users"
   add_foreign_key "feedbacks", "users"
-  add_foreign_key "purchase_histories", "items"
-  add_foreign_key "purchase_histories", "users"
-  add_foreign_key "wishlists", "users"
 end
