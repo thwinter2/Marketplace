@@ -9,7 +9,7 @@
   <% @items.each do |item| %>
     <div class="col mb-4">
       <div class="card h-100 border-primary">
-        <div class="card-header"><img class="card-img-top" src="<%= item.image %>"></div>
+        <div class="card-header"><img class="card-img-top" height="200px" style="object-fit: contain" src="<%= item.image %>"></div>
         <div class="card-body">
           <h5 class="card-title"><strong><%= item.name %></strong></h5>
           <p class="card-text" style="height: 150px; overflow: auto"><%= item.description %></p>
