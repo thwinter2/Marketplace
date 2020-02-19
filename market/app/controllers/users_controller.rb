@@ -24,7 +24,8 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
+    @user = User.create!(user_params)
+    redirect_to @user
 
     respond_to do |format|
       if @user.save
@@ -54,10 +55,17 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+    if !(@user.isAdmin?)
+      @user.destroy
+      respond_to do |format|
+        format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to users_url, notice: 'An Admin cannot be destroyed.' }
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -69,6 +77,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :phone, :dob, :street_address, :city, :state, :zip, :card_name, :card_num, :card_expiration, :card_cvv, :cart, :wishlist)
+      params.require(:user).permit(:name, :email, :password, :phone, :dob, :street_address, :city, :state, :zip, :card_name, :cart, :wishlist)
     end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_18_045539) do
+ActiveRecord::Schema.define(version: 2020_02_18_155828) do
 
   create_table "carts", force: :cascade do |t|
     t.integer "user_id"
@@ -80,9 +80,6 @@ ActiveRecord::Schema.define(version: 2020_02_18_045539) do
     t.string "state"
     t.integer "zip"
     t.string "card_name"
-    t.integer "card_num"
-    t.date "card_expiration"
-    t.integer "card_cvv"
     t.string "cart"
     t.string "wishlist"
     t.datetime "created_at", precision: 6, null: false
@@ -102,5 +99,4 @@ ActiveRecord::Schema.define(version: 2020_02_18_045539) do
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
-  add_foreign_key "feedbacks", "users"
 end

@@ -12,8 +12,9 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
+    <%= form.label :user_id %>:
+    <%= current_user.id %>
+    <%= form.hidden_field :user_id, value: current_user.id%>
   </div>
 
   <div class="field">
@@ -28,7 +29,9 @@
 
   <div class="field">
     <%= form.label :card_experation %>
-    <%= form.date_select :card_experation %>
+    <%= form.date_select :card_experation, use_two_digit_numbers: true, 
+        start_year: Date.today.year, end_year: Date.today.year + 5,
+        date_separator: " / ", order: [:month, :year]%>
   </div>
 
   <div class="field">
