@@ -73,6 +73,10 @@ class CartsController < ApplicationController
     end
   end
 
+  # Verify otp
+  def verify_otp
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
