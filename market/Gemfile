@@ -59,3 +59,6 @@ gem 'jquery-rails'
 
 # Devise Authentication
 gem 'devise'
+
+# One time password
+gem 'rotp'
