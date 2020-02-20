@@ -73,6 +73,24 @@ class ItemsController < ApplicationController
     end
   end
 
+  # One click Buy Now option
+  def buy_now
+    respond_to do |format|
+      # UserMailer.with(1).otp_email.deliver_later
+      puts("testing .............")
+      format.html { redirect_to buy_now, notice: 'One Time Password emailed.' }
+      break
+      # format.json { render :new }
+    end
+  end
+
+  # Verify otp (PUT operation)
+  def verify_otp
+    respond_to do |format|
+      puts("--------------- RECEIVED --------------")
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_item
