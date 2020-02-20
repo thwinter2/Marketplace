@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
   ## Email for OTP
   def otp_email
     @otp  = "123456"
-    mail(to: "a.ghimire06@gmail.com", subject: 'OTP for Quick Purchase')
+    mail(to: current_user.email, subject: 'OTP for Quick Purchase')
   end
 
   ## Email for list of purchases made
