@@ -62,20 +62,20 @@ class CartsController < ApplicationController
   end
 
 
-  # One click Buy Now option
-  def buy_now
-    respond_to do |format|
-      # UserMailer.with(1).otp_email.deliver_later
-      puts("testing .............")
-      format.html { redirect_to buy_now, notice: 'One Time Password emailed.' }
-      break
-      # format.json { render :new }
-    end
-  end
+  # # One click Buy Now option
+  # def buy_now
+  #   respond_to do |format|
+  #     # UserMailer.with(1).otp_email.deliver_later
+  #     puts("testing .............")
+  #     format.html { redirect_to buy_now, notice: 'One Time Password emailed.' }
+  #     break
+  #     # format.json { render :new }
+  #   end
+  # end
 
-  # Verify otp
-  def verify_otp
-  end
+  # # Verify otp
+  # def verify_otp
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.

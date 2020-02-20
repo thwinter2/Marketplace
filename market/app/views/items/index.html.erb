@@ -23,9 +23,9 @@
           </h6>
           <a href="<%= item_path(item) %>" class="btn btn-primary">Details</a>
           <% if user_signed_in? %>
-            <a href="#" class="btn btn-primary">Buy now</a>
+            <a href="<%= button_path %>" class="btn btn-primary">Buy now</a>
           <% else %>
-            <a href="#" class="btn btn-primary">Register</a>
+            <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>
           <% end %>
         </div>
       </div>

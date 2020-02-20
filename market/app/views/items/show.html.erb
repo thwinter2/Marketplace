@@ -62,9 +62,9 @@
 
 <% if user_signed_in? %>
   <a href="#" class="btn btn-primary">Add to Cart</a>
-  <a href="#" class="btn btn-primary">Buy Now</a>
+  <a href="<%= button_path %>" class="btn btn-primary">Buy Now</a>
 <% else %>
-  <a href="#" class="btn btn-primary">Register</a>
+  <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>
 <% end %>
 
 <br>
