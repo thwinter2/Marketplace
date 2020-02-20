@@ -15,7 +15,7 @@
   </thead>
 
   <tbody>
-    <% @credit_cards.each do |credit_card| %>
+    <% @credit_cards.select{|card| card.user_id.equal?(current_user.id)}.each do |credit_card| %>
       <tr>
         <td><%= credit_card.user_id %></td>
         <td><%= credit_card.card_name %></td>

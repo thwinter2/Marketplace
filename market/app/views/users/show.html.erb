@@ -46,33 +46,15 @@
 </p>
 
 <p>
-  <strong>Card name:</strong>
-  <%= @user.card_name %>
+  <strong><%= link_to 'Credit Cards', credit_cards_path(current_user) %></strong>
 </p>
 
 <p>
-  <strong>Card num:</strong>
-  <%= @user.card_num %>
+  <strong><%= link_to 'Cart', carts_path(current_user) %></strong>
 </p>
 
 <p>
-  <strong>Card expiration:</strong>
-  <%= @user.card_expiration %>
-</p>
-
-<p>
-  <strong>Card cvv:</strong>
-  <%= @user.card_cvv %>
-</p>
-
-<p>
-  <strong>Cart:</strong>
-  <%= @user.cart %>
-</p>
-
-<p>
-  <strong>Wishlist:</strong>
-  <%= @user.wishlist %>
+  <strong><%= link_to 'Wishlist', wishlists_path(current_user) %></strong>
 </p>
 
 <%= link_to 'Edit', edit_user_path(@user) %> |

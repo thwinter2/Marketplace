@@ -4,7 +4,7 @@ class CreditCardsController < ApplicationController
   # GET /credit_cards
   # GET /credit_cards.json
   def index
-    @credit_cards = CreditCard.all
+    @credit_cards = CreditCard.select{|card| card.user_id.equal?(current_user.id)}
   end
 
   # GET /credit_cards/1

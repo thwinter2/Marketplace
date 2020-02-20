@@ -4,12 +4,23 @@ class ItemsController < ApplicationController
   # GET /items
   # GET /items.json
   def index
+    if params[:order_by]
+      @items = Item.all.order(params[:order_by])
+    else
     @items = Item.all
+    end
   end
 
   # GET /items/1
   # GET /items/1.json
   def show
+    @popularity = @item.views_count
+    if @popularity.nil?
+      @popularity = 0
+    end
+    @popularity += 1
+    @item.views_count = @popularity
+    @item.save
   end
 
   # GET /items/new
@@ -25,6 +36,8 @@ class ItemsController < ApplicationController
   # POST /items.json
   def create
     @item = Item.new(item_params)
+    @item.views_count = 0
+    @item.unique_id = Item.size
 
     respond_to do |format|
       if @item.save

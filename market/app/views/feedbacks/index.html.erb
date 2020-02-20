@@ -1,25 +1,34 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Feedbacks</h1>
+<h1>Feedback</h1>
+<% if current_user.nil? or !current_user.isAdmin? %>
+  <body><strong>Please feel free to share your thoughts on our marketplace!</strong></body>
+  <p></p>
+  <%= link_to 'Give Feedback', new_feedback_path %>
+  <p></p>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @feedbacks.each do |feedback| %>
+<% else %>
+  <table>
+    <thead>
       <tr>
-        <td><%= link_to 'Show', feedback %></td>
-        <td><%= link_to 'Edit', edit_feedback_path(feedback) %></td>
-        <td><%= link_to 'Destroy', feedback, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>User</th>
+        <th>Visitor Email</th>
+        <th>Feedback</th>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @feedbacks.each do |feedback| %>
+        <tr>
+          <td><%= feedback.user_id %></td>
+          <td><%= feedback.visitor_email %></td>
+          <td><%= feedback.note %></td>
+          <td><%= link_to 'Show', feedback %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
 
 <br>
-
-<%= link_to 'New Feedback', new_feedback_path %>
