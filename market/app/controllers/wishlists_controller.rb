@@ -29,7 +29,7 @@ class WishlistsController < ApplicationController
     respond_to do |format|
       if @wishlist.save
         # Tell the UserMailer to send a wishlist email after save
-        UserMailer.with(wishlist: @wishlist).wishlist_email.deliver_later
+        UserMailer.with(wishlist: @wishlist).wishlist_email(current_user.email).deliver_later
         format.html { redirect_to @wishlist, notice: 'Wishlist was successfully created.' }
         format.json { render :show, status: :created, location: @wishlist }
       else

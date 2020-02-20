@@ -59,6 +59,16 @@
   <strong>Views count:</strong>
   <%= @item.views_count %>
 </p>
+
+<% if user_signed_in? %>
+  <a href="#" class="btn btn-primary">Add to Cart</a>
+  <a href="#" class="btn btn-primary">Buy Now</a>
+<% else %>
+  <a href="#" class="btn btn-primary">Register</a>
+<% end %>
+
+<br>
+
 <% if user_signed_in? and current_user.admin? %>
   <%= link_to 'Destroy', @item, method: :delete, data: { confirm: 'Are you sure?' } %> |
 <% end %>
