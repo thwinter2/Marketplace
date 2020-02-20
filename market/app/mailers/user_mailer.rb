@@ -8,17 +8,17 @@ class UserMailer < ApplicationMailer
   end
 
   ## Email for list of purchases made
-  def purchase_list_email
+  def purchase_email(user_email, purchase_items)
   	## To be implemented
-    # @url  = 'http://example.com/login'
-    # mail(to: @email, subject: 'Thank you for your purchase!')
+    @purchase_items  = purchase_items
+    mail(to: user_email, subject: 'Thank you for your purchase!')
   end
 
   ## Email for when items become available in wishlist
-  def wishlist_email
+  def wishlist_email(user_email)
   	## To be implemented
     @otp  = "123456"
-    mail(to: current_user.email, subject: 'Wishlist item/s available to buy!!!')
+    mail(to: user_email, subject: 'Wishlist item/s available to buy!!!')
   end
 
   ## Email for when returned items request is approved
