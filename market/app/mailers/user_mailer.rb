@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
   ## Email for OTP
   def otp_email
     @otp  = "123456"
-    mail(to: @email, subject: 'OTP for Quick Purchase')
+    mail(to: "a.ghimire06@gmail.com", subject: 'OTP for Quick Purchase')
   end
 
   ## Email for list of purchases made
@@ -18,7 +18,7 @@ class UserMailer < ApplicationMailer
   def wishlist_email
   	## To be implemented
     @otp  = "123456"
-    mail(to: @email, subject: 'Wishlist item/s available to buy!!!')
+    mail(to: current_user.email, subject: 'Wishlist item/s available to buy!!!')
   end
 
   ## Email for when returned items request is approved

@@ -57,5 +57,9 @@
   <strong><%= link_to 'Wishlist', wishlists_path(current_user) %></strong>
 </p>
 
+<p>
+  <strong><%= link_to 'Purchase History', purchase_histories_path(current_user) %></strong>
+</p>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

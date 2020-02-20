@@ -37,7 +37,6 @@ class ItemsController < ApplicationController
   def create
     @item = Item.new(item_params)
     @item.views_count = 0
-    @item.unique_id = Item.size
 
     respond_to do |format|
       if @item.save
