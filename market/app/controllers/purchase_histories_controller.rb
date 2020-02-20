@@ -28,6 +28,9 @@ class PurchaseHistoriesController < ApplicationController
 
     respond_to do |format|
       if @purchase_history.save
+        puts("testing ............... ")
+        puts(purchase_history_params)
+        puts("testing ............... ")
         format.html { redirect_to @purchase_history, notice: 'Purchase history was successfully created.' }
         format.json { render :show, status: :created, location: @purchase_history }
       else
