@@ -2,6 +2,9 @@
 
 <h1>Items</h1>
 <nav class="navbar navbar-expand-lg">
+  <% if user_signed_in? and current_user.admin? %>
+    <%= link_to "New Item", new_item_path, :class => 'btn btn-secondary' %>
+  <% end %>
   <%= link_to "Cost", items_path(order_by: 'cost DESC'), :class => 'nav-link btn btn-primary ml-auto' %>
   <%= link_to "Popularity", items_path(order_by: 'views_count DESC'), :class => 'nav-link btn btn-primary'  %>
 </nav>
@@ -29,7 +32,3 @@
     </div>
   <% end %>
 </div>
-
-<br>
-
-<%= link_to 'New Item', new_item_path %>

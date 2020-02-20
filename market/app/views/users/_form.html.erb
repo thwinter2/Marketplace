@@ -16,7 +16,7 @@
     <%= form.text_field :name %>
   </div>
 
-  <%if !(user.isAdmin?) %>
+  <%if !(user.admin?) %>
     <div class="field">
       <%= form.label :email %><br />
       <%= form.text_field :email %>

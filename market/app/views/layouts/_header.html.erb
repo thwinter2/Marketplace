@@ -5,7 +5,7 @@
   </button>
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
-      <% if !current_user.nil? and current_user.isAdmin? %>
+      <% if user_signed_in? and current_user.admin? %>
         <li class="nav-item">
           <a class="nav-link" href="<%= users_path %>">Users</a>
         </li>

@@ -13,12 +13,4 @@ class User < ApplicationRecord
 
 	#validates :user, :name, :email, :password, :phone, :dob, :street_address, :city, :state, :zip, presence: true
 	#validates :card_experation, format: {with: /[0|1][0-9]}
-
-	def isAdmin?
-		if id == 6
-			true
-		else 
-			false
-		end
-	end
 end

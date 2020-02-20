@@ -2,7 +2,7 @@
 
 <p>
   <strong>Unique ID:</strong>
-  <%= @item.unique_id %>
+  <%= @item.id %>
 </p>
 
 <p>
@@ -59,6 +59,9 @@
   <strong>Views count:</strong>
   <%= @item.views_count %>
 </p>
+<% if user_signed_in? and current_user.admin? %>
+  <%= link_to 'Destroy', @item, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<% end %>
 
 <%= link_to 'Edit', edit_item_path(@item) %> |
 <%= link_to 'Back', items_path %>
