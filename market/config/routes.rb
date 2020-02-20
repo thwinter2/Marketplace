@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
   resources :users
   resources :feedbacks
+  resources :purchase_histories
 
   get '/buy_now', to: 'carts#buy_now', as: 'button'
 
