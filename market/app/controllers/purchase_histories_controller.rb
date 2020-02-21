@@ -31,6 +31,7 @@ class PurchaseHistoriesController < ApplicationController
     respond_to do |format|
       if @purchase_history.save
         puts("testing ............... ")
+        UserMailer.with(purchase_history: @purchase_history).purchase_email(current_user.email, purchase_history_params).deliver_later
         puts(purchase_history_params)
         puts("testing ............... ")
         format.html { redirect_to @purchase_history, notice: 'Purchase history was successfully created.' }

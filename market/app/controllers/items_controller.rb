@@ -84,7 +84,11 @@ class ItemsController < ApplicationController
   def buy_now
     respond_to do |format|
       puts("testing .............")
-      UserMailer.with(item: @item).otp_email(current_user.email).deliver_later
+      otp = "892353" # to be randomized
+      User.find(current_user.id)[:otp] = otp
+      puts("*******************************")
+      puts(User.find(current_user.id).otp)
+      UserMailer.with(item: @item).otp_email(current_user.email, otp).deliver_later
       format.html { redirect_to buy_now, notice: 'One Time Password emailed.' }
       break
       # format.json { render :new }
@@ -93,8 +97,17 @@ class ItemsController < ApplicationController
 
   # Verify otp (PUT operation)
   def verify_otp
+    puts(params[:otp])
+    puts("------------")
+    ## TODO
     respond_to do |format|
-      puts("--------------- RECEIVED --------------")
+      if params[:otp]
+        PurchaseHistory.create(@item)
+        format.html { redirect_to purchase_histories_url, notice: 'Item was successfully purchased.' }
+        format.json { head :no_content }
+      end
+    # original_otp = User.find(current_user.id).email
+    # respond_to do |format|
     end
   end
 

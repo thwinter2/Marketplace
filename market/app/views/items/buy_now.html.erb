@@ -3,9 +3,9 @@
 <b> Enter the OTP code you received in email </b>
 <p>
 
-<%= form_for :now, url: "verify_otp_path" do |form| %>
-  <%= form.text_field :otp %>
-  <%= form.submit  %>
+ <%= form_tag(verify_otp_path, method: :post) do %>
+  <%= text_field_tag(:otp) %>
+  <%= submit_tag("Submit")  %>
 <% end  %>
 
 </p>
