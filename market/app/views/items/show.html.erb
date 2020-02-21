@@ -1,83 +1,57 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Unique ID:</strong>
-  <%= @item.id %>
-</p>
+<%= link_to '<i class="fa fa-chevron-left"></i>'.html_safe, items_path, :class => 'btn btn-light' %>
 
-<p>
-  <strong>Name:</strong>
-  <%= @item.name %>
-</p>
+<ul class="list-unstyled">
+  <li class="media">
+    <img class="mr" height="400px" width="400px" style="object-fit: contain" src="<%= @item.image %>">
+    <div class="media-body px-2">
+      <h2 class="mt-0 mb-1">
+        <%= @item.name %>
+      </h2>
+      <% if @item.special_item %>
+        <span class="badge badge-pill badge-info">Special Item</span>
+      <% end %>
+      <% if @item.age_restricted %>
+          <span class="badge badge-pill badge-info">Age-Restricted</span>
+      <% end %> <br>
+      <%= @item.description %><br><br>
+      <h4>Brand: <%= @item.brand %></h4>
+      <h4>Category: <%= @item.category %></h4><br>
+      <h5>Quantity: <%= @item.quantity %></h5>
+      <h5>Tax Slab: <%= @item.tax_slab %></h5>
+      <h5>Views: <%= @item.views_count %></h5><br>
+      <h4>
+        Price per Item:
+        <% if user_signed_in? and current_user.dob? %>
+          <% discount_rate = User.find(current_user.id).age(current_user.dob) >= 65 ? 0.1 : 0 %>
+        <% else %>
+          <% discount_rate = 0 %>
+        <% end %>
+        <% item_cost = @item.cost * 1.07 %>
+        $<%= (item_cost - item_cost*discount_rate).round(2) %>
+      </h4>
+    </div>
+  </li>
+  <li>
+    <% if user_signed_in? %>
+      <a href="<%= button_path %>" class="btn btn-primary">Buy Now</a>
+      <%= link_to 'Add to Wishlist', wishlists_path(wishlist: {user_id: current_user.id, item_id: @item.id}), method: :post, :class => 'btn btn-primary' %>
+      <% if current_user.admin? %>
+        <%= link_to 'Edit', edit_item_path(@item), :class => 'btn btn-secondary ml-4' %>
+        <%= link_to 'Destroy', @item, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-secondary mx-1' %>
 
-<p>
-  <strong>Brand:</strong>
-  <%= @item.brand %>
-</p>
+      <% end %>
+      <%= form_tag(carts_path(cart: {user_id: current_user.id, item_id: @item.id, tax_slab: @item.tax_slab,
+                                     price: @item.cost}), method: :post) do %>
+        <%= label_tag(:quantity, "Quantity: ") %>
+        <%= number_field_tag(:quantity, 1, min: 1, max: @item.quantity) %>
+        <%= submit_tag("Add to Cart", class: 'btn btn-primary') %>
+      <% end %>
+    <% else %>
+      <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>
+    <% end %>
+  </li>
+</ul>
 
-<p>
-  <strong>Category:</strong>
-  <%= @item.category %>
-</p>
 
-<p>
-  <strong>Description:</strong>
-  <%= @item.description %>
-</p>
-
-<p>
-  <strong>Image:</strong>
-  <%= @item.image %>
-</p>
-
-<p>
-  <strong>Special item:</strong>
-  <%= @item.special_item %>
-</p>
-
-<p>
-  <strong>Age restricted:</strong>
-  <%= @item.age_restricted %>
-</p>
-
-<p>
-  <strong>Quantity:</strong>
-  <%= @item.quantity %>
-</p>
-
-<p>
-  <strong>Cost:</strong>
-  <%= @item.cost %>
-</p>
-
-<p>
-  <strong>Tax slab:</strong>
-  <%= @item.tax_slab %>
-</p>
-
-<p>
-  <strong>Views count:</strong>
-  <%= @item.views_count %>
-</p>
-
-<% if user_signed_in? %>
-  <%= form_tag(carts_path(cart: {user_id: current_user.id, item_id: @item.id, tax_slab: @item.tax_slab, price: @item.cost}), method: :post) do %>
-  <%= label_tag(:quantity, "Quantity: ") %>
-  <%= number_field_tag(:quantity, 1, min: 1, max: @item.quantity) %>
-  <%= submit_tag("Add to Cart", class: 'btn btn-primary') %>
-  <% end %>
-
-  <a href="<%= button_path %>" class="btn btn-primary">Buy Now</a>
-  <%= link_to 'Add to Wishlist', wishlists_path(wishlist: {user_id: current_user.id, item_id: @item.id}), method: :post, :class => 'btn btn-primary' %>
-<% else %>
-  <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>
-<% end %>
-
-<br>
-
-<% if user_signed_in? and current_user.admin? %>
-  <%= link_to 'Destroy', @item, method: :delete, data: { confirm: 'Are you sure?' } %> |
-<% end %>
-
-<%= link_to 'Edit', edit_item_path(@item) %> |
-<%= link_to 'Back', items_path %>
