@@ -1,5 +1,15 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.gmail.com',
+    port:                 587,
+    domain:               'gmail.com',
+    user_name:            'csc517.team1000@gmail.com',
+    password:             'Team1000517',
+    authentication:       'plain',
+    enable_starttls_auto: true 
+  }
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -20,8 +30,8 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-
+  config.public_file_server.enabled = true #ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.serve_static_assets = true
   # Compress CSS using a preprocessor.
   # config.assets.css_compressor = :sass
 
