@@ -2,9 +2,9 @@ class UserMailer < ApplicationMailer
   default from: 'csc517.team1000@gmail.com'
 
   ## Email for OTP
-  def otp_email
-    @otp  = "123456"
-    mail(to: current_user.email, subject: 'OTP for Quick Purchase')
+  def otp_email(user_email)
+    @otp  = "807413"
+    mail(to: user_email, subject: 'OTP for Quick Purchase')
   end
 
   ## Email for list of purchases made
@@ -17,8 +17,9 @@ class UserMailer < ApplicationMailer
   ## Email for when items become available in wishlist
   def wishlist_email(user_email)
   	## To be implemented
-    @otp  = "123456"
-    mail(to: user_email, subject: 'Wishlist item/s available to buy!!!')
+    puts("--------------Wishlist Mailer--------")
+    # @otp  = "123456"
+    # mail(to: user_email, subject: 'Wishlist item/s available to buy!!!')
   end
 
   ## Email for when returned items request is approved

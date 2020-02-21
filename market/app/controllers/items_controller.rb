@@ -83,8 +83,8 @@ class ItemsController < ApplicationController
   # One click Buy Now option
   def buy_now
     respond_to do |format|
-      # UserMailer.with(1).otp_email.deliver_later
       puts("testing .............")
+      UserMailer.with(item: @item).otp_email(current_user.email).deliver_later
       format.html { redirect_to buy_now, notice: 'One Time Password emailed.' }
       break
       # format.json { render :new }
