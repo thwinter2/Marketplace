@@ -12,6 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_02_21_164432) do
 
+
   create_table "carts", force: :cascade do |t|
     t.integer "user_id"
     t.integer "quantity"
@@ -36,12 +37,10 @@ ActiveRecord::Schema.define(version: 2020_02_21_164432) do
   end
 
   create_table "feedbacks", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "visitor_email"
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_feedbacks_on_user_id"
+    t.string "email"
   end
 
   create_table "items", force: :cascade do |t|
@@ -109,5 +108,4 @@ ActiveRecord::Schema.define(version: 2020_02_21_164432) do
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
-  add_foreign_key "feedbacks", "users"
 end
