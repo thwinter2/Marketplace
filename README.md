@@ -2,7 +2,7 @@
 
 # **Submission**
 
-Admin Credentials:
+Admin Credentials
 Email: market5172020@gmail.com
 Password: password
 
