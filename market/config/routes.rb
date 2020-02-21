@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   	controllers: {:registrations => "registrations"}
   resources :wishlists
   resources :credit_cards
-  resources :carts
+  resources :carts do
+    collection do
+      get 'clear'
+    end
+  end
   resources :items do
 
   end

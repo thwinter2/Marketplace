@@ -16,5 +16,13 @@ class User < ApplicationRecord
 	#validates :zip, length: {is: 5}
 	#validates :street_address, format: {with: /\d+ [a-zA-Z]+ [a-zA-Z]+/}
 
+		def age(dob)
+			now = Time.now.utc.to_date
+			if dob.nil?
+				dob = now
+			end
+			now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
+		end
+
 end
 

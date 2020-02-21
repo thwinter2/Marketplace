@@ -4,7 +4,7 @@ class CartsController < ApplicationController
   # GET /carts
   # GET /carts.json
   def index
-    @carts = Cart.all
+    @carts = Cart.where(user_id: current_user.id)
   end
 
   # GET /carts/1
@@ -24,13 +24,19 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
-    @cart = Cart.create(cart_params)
-    puts("------------********************------------")
+    @carts = Cart.where(user_id: current_user.id)
+    if @carts.any? and Cart.where(user_id: current_user.id).where(item_id: cart_params[:item_id]).take
+      @cart = Cart.where(user_id: current_user.id).where(item_id: cart_params[:item_id]).take
+      @cart.quantity = @cart.quantity += params[:quantity].to_i
+    else
+      @cart = Cart.new(cart_params)
+      @cart.quantity = params[:quantity]
+    end
+
+
     respond_to do |format|
       if @cart.save
-        puts("------------------------")
-        puts(@cart.item_id)
-        format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
+        format.html { redirect_to items_path, notice: 'Successfully added to cart' }
         format.json { render :show, status: :created, location: @cart }
       else
         format.html { render :new }
@@ -78,6 +84,15 @@ class CartsController < ApplicationController
   # # Verify otp
   # def verify_otp
   # end
+
+  def clear
+    Cart.where(user_id: current_user.id).delete_all
+    flash[:notice] = 'You have cleared the cart!'
+    respond_to do |format|
+      format.html { redirect_to carts_url, notice: 'Cart was successfully destroyed.' }
+      format.json { head :no_content }
+      end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

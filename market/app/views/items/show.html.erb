@@ -61,7 +61,11 @@
 </p>
 
 <% if user_signed_in? %>
-  <%= link_to 'Add to Cart', carts_path(cart: {user_id: current_user.id, item_id: @item.id, quantity: 1, tax_slab: @item.tax_slab, price: @item.cost}), method: :post %>
+  <%= form_tag(carts_path(cart: {user_id: current_user.id, item_id: @item.id, tax_slab: @item.tax_slab, price: @item.cost}), method: :post) do %>
+  <%= label_tag(:quantity, "Quantity: ") %>
+  <%= number_field_tag(:quantity, 1, min: 1, max: @item.quantity) %>
+  <%= submit_tag("Add to Cart", class: 'btn btn-primary') %>
+  <% end %>
 
   <a href="<%= button_path %>" class="btn btn-primary">Buy Now</a>
 <% else %>

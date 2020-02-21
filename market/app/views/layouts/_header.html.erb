@@ -15,7 +15,13 @@
       </li>
       <% if !current_user.nil? %>
         <li class="nav-item">
-          <a class="nav-link" href="<%= carts_path %>">Cart</a>
+          <a class="nav-link" href="<%= carts_path %>">
+            <i class="fa fa-shopping-cart"></i>
+            Cart
+            <% if Cart.where(user_id: current_user.id).size > 0 %>
+            <span class="badge badge-danger"><%= Cart.where(user_id: current_user.id).size %></span>
+            <% end %>
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<%= wishlists_path %>">Wishlist</a>
