@@ -9,7 +9,7 @@
 
 <% else %>
   <table>
-    <thead>
+    <thead align="center">
       <tr>
         <th>User</th>
         <th>Visitor Email</th>
@@ -21,9 +21,9 @@
     <tbody>
       <% @feedbacks.each do |feedback| %>
         <tr>
-          <td><%= feedback.user_id %></td>
-          <td><%= feedback.visitor_email %></td>
-          <td><%= feedback.note %></td>
+          <td align="center"><%= feedback.user_id %></td>
+          <td align="center"><%= feedback.visitor_email %></td>
+          <td align="center"><%= feedback.note %></td>
           <td><%= link_to 'Show', feedback %></td>
         </tr>
       <% end %>

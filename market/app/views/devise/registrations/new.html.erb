@@ -27,7 +27,7 @@
   </div>
 
   <div class="field">
-  <%= form.label :phone %><br />
+  <%= form.label :phone, "Phone Number (XXX-XXX-XXXX)" %><br />
   <%= form.text_field :phone %>
   </div>
 
@@ -48,7 +48,7 @@
 
   <div class="field">
     <%= form.label :state %><br />
-    <%= select_tag :state, options_for_select(us_states) %>
+    <%= form.select(:state, options_for_select(us_states)) %>
   </div>
 
   <div class="field">

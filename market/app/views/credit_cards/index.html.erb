@@ -3,13 +3,12 @@
 <h1>Credit Cards</h1>
 
 <table>
-  <thead>
+  <thead align="center">
     <tr>
-      <th>User</th>
-      <th>Card name</th>
-      <th>Card num</th>
-      <th>Card experation</th>
-      <th>Card cvv</th>
+      <th>Name</th>
+      <th>Number</th>
+      <th>Expiration</th>
+      <th>CVV</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,11 +16,10 @@
   <tbody>
     <% @credit_cards.select{|card| card.user_id.equal?(current_user.id)}.each do |credit_card| %>
       <tr>
-        <td><%= credit_card.user_id %></td>
-        <td><%= credit_card.card_name %></td>
-        <td><%= credit_card.card_num %></td>
-        <td><%= credit_card.card_experation %></td>
-        <td><%= credit_card.card_cvv %></td>
+        <td align="center"><%= credit_card.card_name %></td>
+        <td align="center"><%= credit_card.card_num %></td>
+        <td align="center"><%= credit_card.card_experation %></td>
+        <td align="center"><%= credit_card.card_cvv %></td>
         <td><%= link_to 'Show', credit_card %></td>
         <td><%= link_to 'Edit', edit_credit_card_path(credit_card) %></td>
         <td><%= link_to 'Destroy', credit_card, method: :delete, data: { confirm: 'Are you sure?' } %></td>

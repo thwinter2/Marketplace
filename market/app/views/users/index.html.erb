@@ -3,13 +3,13 @@
 <h1>Users</h1>
 
 <table>
-  <thead>
+  <thead align="center">
     <tr>
       <th>Name</th>
       <th>Email</th>
       <th>Phone</th>
-      <th>Dob</th>
-      <th>Street address</th>
+      <th>DOB</th>
+      <th>Street Address</th>
       <th>City</th>
       <th>State</th>
       <th>Zip</th>
@@ -22,16 +22,16 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.name %></td>
-        <td><%= user.email %></td>
-        <td><%= user.phone %></td>
-        <td><%= user.dob %></td>
-        <td><%= user.street_address %></td>
-        <td><%= user.city %></td>
-        <td><%= user.state %></td>
-        <td><%= user.zip %></td>
-        <td><%= user.cart %></td>
-        <td><%= user.wishlist %></td>
+        <td align="center"><%= user.name %></td>
+        <td align="center"><%= user.email %></td>
+        <td align="center"><%= user.phone %></td>
+        <td align="center"><%= user.dob %></td>
+        <td align="center"><%= user.street_address %></td>
+        <td align="center"><%= user.city %></td>
+        <td align="center"><%= user.state %></td>
+        <td align="center"><%= user.zip %></td>
+        <td align="center"><%= user.cart %></td>
+        <td align="center"><%= user.wishlist %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>
         <% if !user.admin? and user_signed_in? and current_user.admin? %>
