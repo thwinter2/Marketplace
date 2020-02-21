@@ -4,7 +4,9 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if current_user.admin?
+    if current_user.nil?
+      redirect_to items_url
+    elsif current_user.admin?
       @users = User.all
     else
       @users = User.select{|person| person.id.equal?(current_user.id)}
@@ -80,6 +82,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :phone, :dob, :street_address, :city, :state, :zip, :card_name, :cart, :wishlist)
+      params.require(:user).permit(:name, :email, :password, :phone, :dob, :street_addres, :city, :state, :zip, :card_name, :cart, :wishlist)
     end
 end
