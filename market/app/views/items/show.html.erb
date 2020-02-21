@@ -68,6 +68,7 @@
   <% end %>
 
   <a href="<%= button_path %>" class="btn btn-primary">Buy Now</a>
+  <%= link_to 'Add to Wishlist', wishlists_path(wishlist: {user_id: current_user.id, item_id: @item.id}), method: :post, :class => 'btn btn-primary' %>
 <% else %>
   <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>
 <% end %>

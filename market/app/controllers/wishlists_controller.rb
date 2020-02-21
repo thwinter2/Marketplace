@@ -4,7 +4,7 @@ class WishlistsController < ApplicationController
   # GET /wishlists
   # GET /wishlists.json
   def index
-    @wishlists = Wishlist.all
+    @wishlists = Wishlist.where(user_id: current_user.id)
   end
 
   # GET /wishlists/1
@@ -24,17 +24,23 @@ class WishlistsController < ApplicationController
   # POST /wishlists
   # POST /wishlists.json
   def create
-    @wishlist = Wishlist.new(wishlist_params)
+    @wishlists = Wishlist.where(user_id: current_user.id)
+    if @wishlists.any? and Wishlist.where(user_id: current_user.id).where(item_id: wishlist_params[:item_id]).take
+      flash[:notice] = 'Item already on wishlist!'
+      redirect_to items_url
+    else
+      @wishlist = Wishlist.new(wishlist_params)
 
-    respond_to do |format|
-      if @wishlist.save
-        # Tell the UserMailer to send a wishlist email after save
-        UserMailer.with(wishlist: @wishlist).wishlist_email(current_user.email).deliver_later
-        format.html { redirect_to @wishlist, notice: 'Wishlist was successfully created.' }
-        format.json { render :show, status: :created, location: @wishlist }
-      else
-        format.html { render :new }
-        format.json { render json: @wishlist.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @wishlist.save
+          # Tell the UserMailer to send a wishlist email after save
+          UserMailer.with(wishlist: @wishlist).wishlist_email(current_user.email).deliver_later
+          format.html { redirect_to wishlists_url, notice: 'Item successfully added to wishlist' }
+          format.json { render :show, status: :created, location: @wishlist }
+        else
+          format.html { render :new }
+          format.json { render json: @wishlist.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
@@ -71,6 +77,6 @@ class WishlistsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def wishlist_params
-      params.require(:wishlist).permit(:user_id)
+      params.require(:wishlist).permit(:user_id, :item_id)
     end
 end
