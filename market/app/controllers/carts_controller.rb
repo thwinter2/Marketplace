@@ -24,10 +24,12 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
-    @cart = Cart.new(cart_params)
-
+    @cart = Cart.create(cart_params)
+    puts("------------********************------------")
     respond_to do |format|
       if @cart.save
+        puts("------------------------")
+        puts(@cart.item_id)
         format.html { redirect_to @cart, notice: 'Cart was successfully created.' }
         format.json { render :show, status: :created, location: @cart }
       else
@@ -80,11 +82,11 @@ class CartsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_cart
-      @cart = Cart.find(params[:id])
+      @cart = Cart.find_by(user_id: current_user.id)
     end
 
     # Only allow a list of trusted parameters through.
     def cart_params
-      params.require(:cart).permit(:user_id, :item_id, :quantity)
+      params.require(:cart).permit(:user_id, :item_id, :quantity, :tax_slab, :price)
     end
 end
