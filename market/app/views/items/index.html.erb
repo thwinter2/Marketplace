@@ -5,9 +5,32 @@
   <% if user_signed_in? and current_user.admin? %>
     <%= link_to "New Item", new_item_path, :class => 'btn btn-secondary' %>
   <% end %>
-  <%= link_to "Cost", items_path(order_by: 'cost DESC'), :class => 'nav-link btn btn-primary ml-auto' %>
-  <%= link_to "Popularity", items_path(order_by: 'views_count DESC'), :class => 'nav-link btn btn-primary'  %>
+  <%= link_to '<i class="fa fa-sort-amount-desc"> Cost</i>'.html_safe,
+              items_path(order_by: 'cost DESC'), :class => 'nav-link btn btn-primary ml-auto', :style => 'margin: 5px' %>
+  <%= link_to '<i class="fa fa-sort-amount-asc"> Cost</i>'.html_safe,
+              items_path(order_by: 'cost ASC'), :class => 'nav-link btn btn-primary', :style => 'margin: 5px' %>
+  <%= link_to '<i class="fa fa-sort-amount-desc"> Popularity</i>'.html_safe,
+              items_path(order_by: 'views_count DESC'), :class => 'nav-link btn btn-primary', :style => 'margin: 5px'  %>
+  <%= link_to '<i class="fa fa-sort-amount-asc"> Popularity</i>'.html_safe,
+              items_path(order_by: 'views_count ASC'), :class => 'nav-link btn btn-primary', :style => 'margin: 5px'  %>
 </nav>
+
+<%= form_tag(items_path, method: :get) do %>
+  <%= label_tag(:category, "Category") %>
+  <%= text_field_tag(:category, params[:category]) %>
+  <%= submit_tag("Filter by Category") %>
+<% end %>
+<%= form_tag(items_path, method: :get) do %>
+  <%= label_tag(:search_brand, "Brand") %>
+  <%= text_field_tag(:search_brand) %>
+  <%= submit_tag("Filter by Brand") %>
+<% end %>
+<%= form_tag(items_path, method: :get) do %>
+  <%= label_tag(:search_availability, "In Stock") %>
+  <%= check_box_tag(:search_availability) %>
+  <%= submit_tag("Show Availability") %>
+<% end %>
+
 <div class="row row-cols-1 row-cols-md-4">
   <% @items.each do |item| %>
     <div class="col mb-4">
