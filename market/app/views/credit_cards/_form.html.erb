@@ -18,27 +18,26 @@
   </div>
 
   <div class="field">
-    <%= form.label :card_name %>
+    <%= form.label :card_name, "Name on Card" %><br />
     <%= form.text_field :card_name %>
   </div>
 
   <div class="field">
-    <%= form.label :card_num %>
+    <%= form.label :card_num, "Card Number" %><br />
     <%= form.number_field :card_num %>
   </div>
 
   <div class="field">
-    <%= form.label :card_experation %>
-    <%= form.date_select :card_experation, use_two_digit_numbers: true, 
-        start_year: Date.today.year, end_year: Date.today.year + 5,
-        date_separator: " / ", order: [:month, :year]%>
+    <%= form.label :card_experation, "Card Expiration (mm/yy)" %><br />
+    <%= form.text_field :card_experation %>
   </div>
+  <p></p>
 
   <div class="field">
-    <%= form.label :card_cvv %>
+    <%= form.label :card_cvv, "CVV" %><br />
     <%= form.number_field :card_cvv %>
   </div>
-
+  <p></p>
   <div class="actions">
     <%= form.submit %>
   </div>

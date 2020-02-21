@@ -11,6 +11,10 @@ class User < ApplicationRecord
 	has_one :wishlist, :class_name => 'Wishlist', :foreign_key => 'user_id'
 	has_many :items, through: :wishlist
 
-	#validates :user, :name, :email, :password, :phone, :dob, :street_address, :city, :state, :zip, presence: true
-	#validates :card_experation, format: {with: /[0|1][0-9]}
+	#validates :name, :phone, :dob, :city, :zip, presence: true
+	#validates :phone, format: {with: /\d{3}-\d{3}-\d{4}/}
+	#validates :zip, length: {is: 5}
+	#validates :street_address, format: {with: /\d+ [a-zA-Z]+ [a-zA-Z]+/}
+
 end
+

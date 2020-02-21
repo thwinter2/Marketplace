@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_030749) do
+ActiveRecord::Schema.define(version: 2020_02_21_040423) do
+
+  create_table "admin_users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_admin_users_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
+  end
 
   create_table "carts", force: :cascade do |t|
     t.integer "user_id"
@@ -28,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_02_21_030749) do
     t.integer "user_id"
     t.string "card_name"
     t.integer "card_num"
-    t.date "card_experation"
+    t.string "card_experation"
     t.integer "card_cvv"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
