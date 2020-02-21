@@ -62,3 +62,6 @@ gem 'devise'
 
 # One time password
 gem 'rotp'
+
+# Icons
+gem 'font-awesome-rails'

@@ -29,6 +29,10 @@ ActiveRecord::Schema.define(version: 2020_02_21_052022) do
     t.integer "quantity"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "item_id"
+    t.string "tax_slab"
+    t.integer "price"
+    t.index ["item_id"], name: "index_carts_on_item_id"
     t.index ["user_id"], name: "index_carts_on_user_id"
   end
 

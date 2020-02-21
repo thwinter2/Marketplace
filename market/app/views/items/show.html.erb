@@ -61,7 +61,8 @@
 </p>
 
 <% if user_signed_in? %>
-  <a href="#" class="btn btn-primary">Add to Cart</a>
+  <%= link_to 'Add to Cart', carts_path(cart: {user_id: current_user.id, item_id: @item.id, quantity: 1, tax_slab: @item.tax_slab, price: @item.cost}), method: :post %>
+
   <a href="<%= button_path %>" class="btn btn-primary">Buy Now</a>
 <% else %>
   <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>

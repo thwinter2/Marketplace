@@ -6,8 +6,14 @@ class ItemsController < ApplicationController
   def index
     if params[:order_by]
       @items = Item.all.order(params[:order_by])
+    elsif params[:search_category]
+      @items = Item.category(params[:search_category])
+    elsif params[:search_brand]
+      @items = Item.brand(params[:search_brand])
+    elsif params[:search_availability]
+      @items = Item.availability(params[:search_availability])
     else
-    @items = Item.all
+      @items = Item.all
     end
   end
 
@@ -99,6 +105,6 @@ class ItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def item_params
-      params.require(:item).permit(:unique_id, :name, :brand, :category, :description, :image, :special_item, :age_restricted, :quantity, :cost, :tax_slab, :views_count)
+      params.require(:item).permit(:unique_id, :name, :brand, :category, :description, :image, :special_item, :age_restricted, :quantity, :cost, :tax_slab, :views_count, :search_category, :search_brand, :search_availability)
     end
 end
