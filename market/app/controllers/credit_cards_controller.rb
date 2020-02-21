@@ -1,5 +1,7 @@
 class CreditCardsController < ApplicationController
   before_action :set_credit_card, only: [:show, :edit, :update, :destroy]
+  before_action :reroute_visitor, except: []
+  before_action :hide_other_cards, except: [:index]
 
   # GET /credit_cards
   # GET /credit_cards.json
@@ -70,5 +72,9 @@ class CreditCardsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def credit_card_params
       params.require(:credit_card).permit(:user_id, :card_name, :card_num, :card_experation, :card_cvv)
+    end
+
+    def hide_other_cards
+      redirect_to credit_cards_url unless @credit_card.user_id.equal?(current_user.id)
     end
 end

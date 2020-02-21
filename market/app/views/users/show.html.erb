@@ -26,8 +26,8 @@
 </p>
 
 <p>
-  <strong>Street address:</strong>
-  <%= @user.street_address %>
+  <strong>Street Address:</strong>
+  <%= @user.street_addres %>
 </p>
 
 <p>
@@ -45,9 +45,11 @@
   <%= @user.zip %>
 </p>
 
+<% if @user.id.equal?(current_user.id) %>
 <p>
   <strong><%= link_to 'Credit Cards', credit_cards_path(current_user) %></strong>
 </p>
+<% end %>
 
 <p>
   <strong><%= link_to 'Cart', carts_path(current_user) %></strong>

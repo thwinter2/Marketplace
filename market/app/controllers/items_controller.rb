@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :reroute_visitor_and_normal_user, except: [:index, :show, :buy_now, :verify_otp]
 
   # GET /items
   # GET /items.json
@@ -7,11 +8,11 @@ class ItemsController < ApplicationController
     if params[:order_by]
       @items = Item.all.order(params[:order_by])
     elsif params[:search_category]
-      @items = Item.category(params[:search_category])
+      @items = Item.search_category(params[:search_category])
     elsif params[:search_brand]
-      @items = Item.brand(params[:search_brand])
+      @items = Item.search_brand(params[:search_brand])
     elsif params[:search_availability]
-      @items = Item.availability(params[:search_availability])
+      @items = Item.search_availability(params[:search_availability])
     else
       @items = Item.all
     end

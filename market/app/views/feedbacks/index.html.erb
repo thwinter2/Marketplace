@@ -1,34 +1,34 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Feedback</h1>
+
 <% if current_user.nil? or !current_user.admin? %>
-  <body><strong>Please feel free to share your thoughts on our marketplace!</strong></body>
-  <p></p>
-  <%= link_to 'Give Feedback', new_feedback_path %>
-  <p></p>
-
-<% else %>
-  <table>
-    <thead align="center">
-      <tr>
-        <th>User</th>
-        <th>Visitor Email</th>
-        <th>Feedback</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @feedbacks.each do |feedback| %>
-        <tr>
-          <td align="center"><%= feedback.user_id %></td>
-          <td align="center"><%= feedback.visitor_email %></td>
-          <td align="center"><%= feedback.note %></td>
-          <td><%= link_to 'Show', feedback %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% end %>
+<body><strong>Please feel free to share your thoughts on our marketplace!</strong></body>
 
 <br>
+<%= link_to 'Give Feedback', new_feedback_path, :class => 'btn btn-primary' %>
+<br>
+
+<% else %>
+<table class="table">
+  <thead class="thead-light" align="center">
+    <tr>
+      <th>Email</th>
+      <th>Feedback</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @feedbacks.each do |feedback| %>
+      <tr>
+        <td align="center">
+          <%= feedback.email %>
+        </td>
+        <td align="center"><%= feedback.note %></td>
+        <td><%= link_to 'Show', feedback, :class => 'btn btn-primary' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

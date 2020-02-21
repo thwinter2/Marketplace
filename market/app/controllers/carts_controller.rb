@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :reroute_visitor, except: []
 
   # GET /carts
   # GET /carts.json

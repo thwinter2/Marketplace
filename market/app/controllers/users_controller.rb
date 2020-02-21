@@ -1,9 +1,10 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :reroute_visitor, except: []
   # GET /users
   # GET /users.json
   def index
+
     if current_user.admin?
       @users = User.all
     else
@@ -32,7 +33,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to new_session_path(email: 'market5172020@gmail.com', password: 'password'), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -80,6 +81,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :phone, :dob, :street_address, :city, :state, :zip, :card_name, :cart, :wishlist)
+      params.require(:user).permit(:name, :email, :password, :phone, :dob, :street_addres, :city, :state, :zip, :card_name, :cart, :wishlist)
     end
 end

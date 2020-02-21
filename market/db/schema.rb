@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_084300) do
+ActiveRecord::Schema.define(version: 2020_02_21_165309) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -48,12 +48,10 @@ ActiveRecord::Schema.define(version: 2020_02_21_084300) do
   end
 
   create_table "feedbacks", force: :cascade do |t|
-    t.integer "user_id"
-    t.string "visitor_email"
     t.text "note"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_feedbacks_on_user_id"
+    t.string "email"
   end
 
   create_table "items", force: :cascade do |t|
@@ -91,7 +89,6 @@ ActiveRecord::Schema.define(version: 2020_02_21_084300) do
     t.string "password"
     t.string "phone"
     t.date "dob"
-    t.string "street_address"
     t.string "city"
     t.string "state"
     t.integer "zip"
@@ -108,6 +105,7 @@ ActiveRecord::Schema.define(version: 2020_02_21_084300) do
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.boolean "admin"
+    t.string "street_addres"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -121,5 +119,4 @@ ActiveRecord::Schema.define(version: 2020_02_21_084300) do
     t.index ["user_id"], name: "index_wishlists_on_user_id"
   end
 
-  add_foreign_key "feedbacks", "users"
 end

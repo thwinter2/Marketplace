@@ -7,7 +7,7 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create(name: 'admin', password: 'password', email: 'market5172020@gmail.com',
-            phone: '123-456-7890', dob: '1920-01-01', street_address: '123 Meeting St',
+            phone: '123-456-7890', dob: '1920-01-01', street_addres: '123 Meeting St',
             city: 'Raleigh', state: 'NC', zip: 27606, admin: true)
 Item.create(name: 'Banana', brand: 'Chiquita', category: 'Produce', description: 'Yellow fruit that\'s high in ' +
     'potassium.', image: 'https://balaskas.shop/cms/uploads/2018/05/0000020084.jpg', special_item: false,
