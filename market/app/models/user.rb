@@ -11,10 +11,10 @@ class User < ApplicationRecord
 	has_one :wishlist, :class_name => 'Wishlist', :foreign_key => 'user_id'
 	has_many :items, through: :wishlist
 
-	#validates :name, :phone, :dob, :city, :zip, presence: true
-	#validates :phone, format: {with: /\d{3}-\d{3}-\d{4}/}
-	#validates :zip, length: {is: 5}
-	#validates :street_addres, format: {with: /\d+ [a-zA-Z]+ [a-zA-Z]+/}
+	validates :name, :phone, :dob, :street_addres, :city, :state, :zip, presence: true
+	validates :phone, format: {with: /\d{3}-\d{3}-\d{4}/}
+	validates :zip, length: {is: 5}
+	validates :street_addres, format: {with: /\d+ [a-zA-Z]+ [a-zA-Z]+,?.*/}
 
 		def age(dob)
 			now = Time.now.utc.to_date

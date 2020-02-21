@@ -1,5 +1,7 @@
 class FeedbacksController < ApplicationController
   before_action :set_feedback, only: [:show, :edit, :update, :destroy]
+  before_action :reroute_feedback_reader, except: [:index, :show]
+  before_action :reroute_feedback_writer, only: [:show, :edit, :destroy, :update]
 
   # GET /feedbacks
   # GET /feedbacks.json
@@ -28,7 +30,7 @@ class FeedbacksController < ApplicationController
 
     respond_to do |format|
       if @feedback.save
-        format.html { redirect_to @feedback, notice: 'Feedback was successfully created.' }
+        format.html { redirect_to @feedback, notice: 'Thank you for your feedback!' }
         format.json { render :show, status: :created, location: @feedback }
       else
         format.html { render :new }
@@ -42,7 +44,7 @@ class FeedbacksController < ApplicationController
   def update
     respond_to do |format|
       if @feedback.update(feedback_params)
-        format.html { redirect_to @feedback, notice: 'Feedback was successfully updated.' }
+        format.html { redirect_to @feedback, notice: 'Thank you for your feedback!' }
         format.json { render :show, status: :ok, location: @feedback }
       else
         format.html { render :edit }
@@ -70,5 +72,13 @@ class FeedbacksController < ApplicationController
     # Only allow a list of trusted parameters through.
     def feedback_params
       params.require(:feedback).permit(:user_id, :visitor_email, :note)
+    end
+
+    def reroute_feedback_reader
+      redirect_to feedbacks_url unless current_user.nil? or !current_user.admin?
+    end
+
+    def reroute_feedback_writer
+      redirect_to feedbacks_url unless !current_user.nil? and current_user.admin?
     end
 end

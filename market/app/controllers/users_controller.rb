@@ -1,12 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-
+  before_action :reroute_visitor, except: []
   # GET /users
   # GET /users.json
   def index
-    if current_user.nil?
-      redirect_to items_url
-    elsif current_user.admin?
+
+    if current_user.admin?
       @users = User.all
     else
       @users = User.select{|person| person.id.equal?(current_user.id)}
