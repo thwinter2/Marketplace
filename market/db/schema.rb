@@ -79,10 +79,6 @@ ActiveRecord::Schema.define(version: 2020_02_19_204221) do
     t.string "city"
     t.string "state"
     t.integer "zip"
-    t.string "card_name"
-    t.integer "card_num"
-    t.date "card_expiration"
-    t.integer "card_cvv"
     t.string "cart"
     t.string "wishlist"
     t.datetime "created_at", precision: 6, null: false

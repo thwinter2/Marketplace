@@ -32,12 +32,12 @@
   </div>
 
   <div class="field">
-    <%= form.label :dob %><br />
-    <%= form.date_select :dob, start_year: Date.today.year, end_year: Date.today.year - 100, order: [:month, :day, :year]%> 
+    <%= form.label :dob, "Date of Birth" %><br />
+    <%= form.date_field :dob, max: Date.today %>
   </div>
 
   <div class="field">
-    <%= form.label :street_address %><br />
+    <%= form.label :street_address, "Street Address" %><br />
     <%= form.text_field :street_address %>
   </div>
 

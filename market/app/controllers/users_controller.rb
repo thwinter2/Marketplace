@@ -24,8 +24,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.create!(user_params)
-    redirect_to @user
+    @user = User.new(user_params)
 
     respond_to do |format|
       if @user.save
@@ -55,7 +54,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    if current_user.admin?
+    if !@user.admin?
       @user.destroy
       respond_to do |format|
         format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }

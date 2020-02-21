@@ -37,13 +37,13 @@
   <% end%>
 
   <div class="field">
-    <%= form.label :phone, "Phone Number" %><br />
+    <%= form.label :phone, "Phone Number (XXX-XXX-XXXX)" %><br />
     <%= form.text_field :phone %>
   </div>
 
   <div class="field">
     <%= form.label :dob, "Date of Birth" %><br />
-    <%= form.date_select :dob, start_year: Date.today.year, end_year: Date.today.year - 100, order: [:month, :day, :year]%>
+    <%= form.date_field :dob, max: Date.today %>
   </div>
 
   <div class="field">
