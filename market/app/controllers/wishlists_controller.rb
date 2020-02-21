@@ -1,6 +1,7 @@
 class WishlistsController < ApplicationController
   before_action :set_wishlist, only: [:show, :edit, :update, :destroy]
   before_action :reroute_visitor, except: []
+  before_action :hide_other_user_wishlists, except: [:index]
 
   # GET /wishlists
   # GET /wishlists.json
@@ -79,5 +80,9 @@ class WishlistsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def wishlist_params
       params.require(:wishlist).permit(:user_id, :item_id)
+    end
+
+    def hide_other_user_wishlists
+      redirect_to wishlists_url unless current_user.admin? or @wishlist.user_id.equal?(current_user.id)
     end
 end

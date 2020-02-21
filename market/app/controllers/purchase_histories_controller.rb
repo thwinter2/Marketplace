@@ -1,5 +1,7 @@
 class PurchaseHistoriesController < ApplicationController
   before_action :set_purchase_history, only: [:show, :edit, :update, :destroy]
+  before_action :reroute_visitor, except: []
+
 
   # GET /purchase_histories
   # GET /purchase_histories.json

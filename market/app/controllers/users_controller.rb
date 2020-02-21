@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :reroute_visitor, except: []
+  before_action :hide_other_users, except: [:index]
+  
   # GET /users
   # GET /users.json
   def index
@@ -82,5 +84,9 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:name, :email, :password, :phone, :dob, :street_addres, :city, :state, :zip, :card_name, :cart, :wishlist)
+    end
+
+    def hide_other_users
+      redirect_to users_url unless @user.id.equal?(current_user.id) or current_user.admin?
     end
 end
