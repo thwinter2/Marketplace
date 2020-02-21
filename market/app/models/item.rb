@@ -3,8 +3,8 @@ class Item < ApplicationRecord
 	# belongs_to :wishlist
 	has_one :purchase_histories, :class_name => 'PurchaseHistory', :foreign_key => 'item_id'
 
-	def self.category(category)
-		if !category.nil?
+	def self.search_category(category)
+		if category != ""
 			categories = Item.where(category: category)
 			if categories
 				return categories
@@ -16,8 +16,8 @@ class Item < ApplicationRecord
 		end
 	end
 
-	def self.brand(brand)
-		if !brand.nil?
+	def self.search_brand(brand)
+		if brand != ""
 			brands = Item.where(brand: brand)
 			if brands
 				return brands
@@ -29,7 +29,7 @@ class Item < ApplicationRecord
 		end
 	end
 
-	def self.availability(availability)
+	def self.search_availability(availability)
 		if !availability.nil?
 			stocked = Item.where("quantity > 0")
 			if stocked

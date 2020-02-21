@@ -18,8 +18,8 @@
 <nav class="navbar navbar-expand-lg">
   <div class="d-inline px-1">
     <%= form_tag(items_path, method: :get) do %>
-      <%= label_tag(:category, "Category: ") %>
-      <%= text_field_tag(:category, params[:category]) %>
+      <%= label_tag(:search_category, "Category: ") %>
+      <%= text_field_tag(:search_category, params[:category]) %>
       <%= submit_tag("Filter by Category", class: 'btn btn-primary') %>
     <% end %>
   </div>
@@ -52,7 +52,7 @@
           <h6 class="card-text">
             $<%= number_with_precision(item.cost, :precision => 2, :delimiter => ',') %>
           </h6>
-          <a href="<%= item_path(item) %>" class="btn btn-primary stretched-link">Details</a>
+          <a href="<%= item_path(item) %>" class="btn btn-primary">Details</a>
           <% if user_signed_in? %>
             <a href="<%= button_path %>" class="btn btn-primary">Buy now</a>
           <% else %>

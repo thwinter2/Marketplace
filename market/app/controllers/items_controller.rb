@@ -7,11 +7,11 @@ class ItemsController < ApplicationController
     if params[:order_by]
       @items = Item.all.order(params[:order_by])
     elsif params[:search_category]
-      @items = Item.category(params[:search_category])
+      @items = Item.search_category(params[:search_category])
     elsif params[:search_brand]
-      @items = Item.brand(params[:search_brand])
+      @items = Item.search_brand(params[:search_brand])
     elsif params[:search_availability]
-      @items = Item.availability(params[:search_availability])
+      @items = Item.search_availability(params[:search_availability])
     else
       @items = Item.all
     end
