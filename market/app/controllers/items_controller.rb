@@ -84,7 +84,7 @@ class ItemsController < ApplicationController
   def buy_now
     respond_to do |format|
       puts("testing .............")
-      otp = "892353" # to be randomized
+      otp = rand(10 ** 9...10 ** 10).to_s
       # User.find(current_user.id)[:otp] = otp
       puts("*******************************")
       # puts(User.find(current_user.id).otp)
