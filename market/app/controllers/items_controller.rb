@@ -85,9 +85,9 @@ class ItemsController < ApplicationController
     respond_to do |format|
       puts("testing .............")
       otp = "892353" # to be randomized
-      User.find(current_user.id)[:otp] = otp
+      # User.find(current_user.id)[:otp] = otp
       puts("*******************************")
-      puts(User.find(current_user.id).otp)
+      # puts(User.find(current_user.id).otp)
       UserMailer.with(item: @item).otp_email(current_user.email, otp).deliver_later
       format.html { redirect_to buy_now, notice: 'One Time Password emailed.' }
       break
