@@ -1,7 +1,7 @@
 class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
   before_action :reroute_visitor, except: []
-  before_action :hide_other_user_carts, except: [:index]
+  # before_action :hide_other_user_carts, except: [:index]
 
   # GET /carts
   # GET /carts.json
@@ -107,7 +107,7 @@ class CartsController < ApplicationController
       params.require(:cart).permit(:user_id, :item_id, :quantity, :tax_slab, :price)
     end
 
-    def hide_other_user_carts
-      redirect_to carts_url unless current_user.admin? or @cart.user_id.equal?(current_user.id)
-    end
+    # def hide_other_user_carts
+    #   redirect_to carts_url unless current_user.admin? or @cart.user_id.equal?(current_user.id)
+    # end
 end
