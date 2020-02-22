@@ -3,12 +3,11 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   	devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-	has_one :cart, :class_name => 'Cart', :foreign_key => 'user_id'
+	has_many :cart, :class_name => 'Cart', :foreign_key => 'user_id', dependent: :delete_all
 	has_many :items, through: :cart
-	has_many :feedbacks, :class_name => 'Feedback', :foreign_key => 'user_id'
-	has_one :purchase_histories, :class_name => 'PurchaseHistory', :foreign_key => 'user_id'
+	has_many :purchase_histories, :class_name => 'PurchaseHistory', :foreign_key => 'user_id', dependent: :delete_all
 	has_many :credit_cards, :class_name => 'CreditCard', :foreign_key => 'user_id', dependent: :delete_all
-	has_one :wishlist, :class_name => 'Wishlist', :foreign_key => 'user_id'
+	has_many :wishlist, :class_name => 'Wishlist', :foreign_key => 'user_id', dependent: :delete_all
 	has_many :items, through: :wishlist
 
 	validates :name, :phone, :dob, :street_addres, :city, :state, :zip, presence: true
