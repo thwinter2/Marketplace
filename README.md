@@ -8,6 +8,10 @@ Email: market5172020@gmail.com
 
 Password: password
 
+
+Credit Cards is accessed in a link in the User's profile, which you can get to from the "Edit Profile" button in the top right header.
+
+
 Your submission in Expertiza should consist of the following-
 
 * A link to your deployed application
