@@ -26,15 +26,7 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
-    @carts = Cart.where(user_id: current_user.id)
-    if @carts.any? and Cart.where(user_id: current_user.id).where(item_id: cart_params[:item_id]).take
-      @cart = Cart.where(user_id: current_user.id).where(item_id: cart_params[:item_id]).take
-      @cart.quantity = @cart.quantity += params[:quantity].to_i
-    else
-      @cart = Cart.new(cart_params)
-      @cart.quantity = params[:quantity]
-    end
-
+    @cart = Cart.new(cart_params)
 
     respond_to do |format|
       if @cart.save
@@ -98,9 +90,7 @@ class CartsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_cart
-      @cart = Cart.find_by(user_id: current_user.id)
-    end
+
 
     # Only allow a list of trusted parameters through.
     def cart_params

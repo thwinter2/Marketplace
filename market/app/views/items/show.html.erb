@@ -35,18 +35,18 @@
   </li>
   <li>
     <% if user_signed_in? %>
-      <a href="<%= button_path %>" class="btn btn-primary"> Now</a>
+      <a href="<%= button_path %>" class="btn btn-primary">Buy Now</a>
       <%= link_to 'Add to Wishlist', wishlists_path(wishlist: {user_id: current_user.id, item_id: @item.id}), method: :post, :class => 'btn btn-primary' %>
       <% if current_user.admin? %>
         <%= link_to 'Edit', edit_item_path(@item), :class => 'btn btn-secondary ml-4' %>
         <%= link_to 'Destroy', @item, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-secondary mx-1' %>
 
       <% end %>
-      <%= form_tag(carts_path(cart: {user_id: current_user.id, item_id: @item.id, tax_slab: @item.tax_slab,
-                                     price: @item.cost}), method: :post) do %>
+      <%= form_tag(cart_items_path(item: {user_id: current_user.id, item_id: @item.id}), method: :post) do %>
         <%= label_tag(:quantity, "Quantity: ") %>
         <%= number_field_tag(:quantity, 1, min: 1, max: @item.quantity) %>
         <%= submit_tag("Add to Cart", class: 'btn btn-primary') %>
+        <%= submit_tag("Buy Now", class: 'btn btn-primary') %>
       <% end %>
     <% else %>
       <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>

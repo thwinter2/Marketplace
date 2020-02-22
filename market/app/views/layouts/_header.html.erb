@@ -15,15 +15,18 @@
       </li>
       <% if !current_user.nil? %>
         <li class="nav-item">
-          <a class="nav-link" href="<%= carts_path %>">
+          <a class="nav-link" href="<%= cart_path(current_user.id) %>">
             <i class="fa fa-shopping-cart"></i>
             Cart
-            <% if Cart.where(user_id: current_user.id).size > 0 %>
-              <% cart_sum = 0 %>
-              <% Cart.where(user_id: current_user.id).each do |item| %>
-                <% cart_sum += item.quantity %>
+            <% if Cart.find_by(user_id: current_user.id) %>
+              <% cart = Cart.find_by(user_id: current_user.id) %>
+              <% if CartItem.where(cart_id: cart.id).size > 0 %>
+                <% cart_sum = 0 %>
+                <% CartItem.where(cart_id: cart.id).each do |item| %>
+                  <% cart_sum += item.quantity %>
+                <% end %>
+                <span class="badge badge-danger"><%= cart_sum %></span>
               <% end %>
-              <span class="badge badge-danger"><%= cart_sum %></span>
             <% end %>
           </a>
         </li>

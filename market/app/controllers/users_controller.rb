@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   before_action :reroute_visitor, except: []
   before_action :hide_other_users, except: [:index]
+  before_action :set_cart, only: [:new, :create]
   
   # GET /users
   # GET /users.json

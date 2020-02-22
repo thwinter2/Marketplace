@@ -12,6 +12,30 @@ class ApplicationController < ActionController::Base
      	redirect_to items_url unless !current_user.nil? or !current_user.admin?
      end
 
+     def set_cart
+          if user_signed_in?
+               @cart = Cart.find_by(user_id: current_user.id)
+               if !@cart
+                    puts '**********************************************************'
+                    puts '***               Cart doesn\'t exist                  ***'
+                    puts '***               Creating new cart                    ***'
+                    puts '***                                                    ***'
+                    puts '**********************************************************'
+                    @cart = Cart.new({user_id: current_user.id})
+                    if @cart.save
+                         puts 'Saved!'
+                    end
+               else
+                    puts '**********************************************************'
+                    puts '***                 Cart does exist                    ***'
+                    puts '***                                                    ***'
+                    puts '***                                                    ***'
+                    puts '**********************************************************'
+                    puts @cart
+               end
+          end
+     end
+
      protected
 
           def configure_permitted_parameters

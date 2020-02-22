@@ -1,9 +1,11 @@
 class User < ApplicationRecord
+	has_one :cart
+	has_many :cart_items, through: :cart
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   	devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-	has_many :cart, :class_name => 'Cart', :foreign_key => 'user_id', dependent: :delete_all
+	# has_many :cart, :class_name => 'Cart', :foreign_key => 'user_id', dependent: :delete_all
 	has_many :items, through: :cart
 	has_many :purchase_histories, :class_name => 'PurchaseHistory', :foreign_key => 'user_id', dependent: :delete_all
 	has_many :credit_cards, :class_name => 'CreditCard', :foreign_key => 'user_id', dependent: :delete_all
