@@ -1,6 +1,7 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :set_cart, only: [:show, :edit, :update, :destroy, :checkout]
   before_action :reroute_visitor, except: []
+  before_action :generate_otp, only: [:checkout]
   # before_action :hide_other_user_carts, except: [:index]
 
   # GET /carts
@@ -63,22 +64,6 @@ class CartsController < ApplicationController
     end
   end
 
-
-  # # One click Buy Now option
-  # def buy_now
-  #   respond_to do |format|
-  #     # UserMailer.with(1).otp_email.deliver_later
-  #     puts("testing .............")
-  #     format.html { redirect_to buy_now, notice: 'One Time Password emailed.' }
-  #     break
-  #     # format.json { render :new }
-  #   end
-  # end
-
-  # # Verify otp
-  # def verify_otp
-  # end
-
   def clear
     Cart.where(user_id: current_user.id).delete_all
     flash[:notice] = 'You have cleared the cart!'
@@ -88,13 +73,32 @@ class CartsController < ApplicationController
       end
   end
 
+  def checkout
+    totp = ROTP::TOTP.new("base32secret3232", issuer: "My Service")
+    if params[:commit] == "Submit"
+      if totp.verify(params[:otp], drift_behind: 300)
+        redirect_to @cart, notice: 'Successful password verification'
+      else
+        format.html { redirect_to checkout_path, notice: 'Unsuccessful password verification' }
+      end
+    else
+      UserMailer.otp_email(current_user.email, @otp).deliver_later
+      end
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
 
 
     # Only allow a list of trusted parameters through.
     def cart_params
-      params.require(:cart).permit(:user_id, :item_id, :quantity, :tax_slab, :price)
+      params.require(:cart).permit(:user_id, :item_id, :quantity, :tax_slab, :price, :otp)
+    end
+
+    def generate_otp
+      totp = ROTP::TOTP.new("base32secret3232", issuer: "My Service")
+      @otp = totp.now
     end
 
     # def hide_other_user_carts

@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :purchase_histories
 
   get '/buy_now', to: 'items#buy_now', as: 'button'
+  get '/checkout', to: 'carts#checkout', as: 'checkout'
   post '/verify_otp', to: 'items#verify_otp', as: 'verify_otp'
 
   root 'items#index'

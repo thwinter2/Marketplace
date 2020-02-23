@@ -25,10 +25,15 @@ class CartItemsController < ApplicationController
   # POST /cart_items
   # POST /cart_items.json
   def create
-    @cart.add_item(params)
-    if @cart.save
-      redirect_to cart_path(@cart.id)
+    if params[:commit] == "Add to Cart"
+      @cart.add_item(params)
+      if @cart.save
+        redirect_to cart_path(@cart.id)
+      end
+    else
+      redirect_to items_path
     end
+
 
     # @cart_item = CartItem.new(cart_item_params)
     #

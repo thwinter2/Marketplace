@@ -44,5 +44,5 @@
 <% else %>
   <br><h3>No items in cart. Please feel free to have a look at our inventory!</h3><br>
 <% end %>
-
+<%= link_to 'Checkout', checkout_path, :class => 'btn btn-primary' %>
 <%= link_to 'Back To Shopping', items_path, :class => 'btn btn-primary' %>

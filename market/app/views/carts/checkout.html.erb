@@ -1,0 +1,11 @@
+<p id="notice"><%= notice %></p>
+
+<b> Enter the OTP code you received in email </b>
+<p>
+
+  <%= form_tag(checkout_path, method: :get) do %>
+    <%= text_field_tag(:otp) %>
+    <%= submit_tag("Submit")  %>
+  <% end  %>
+
+</p>
