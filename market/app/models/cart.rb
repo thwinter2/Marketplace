@@ -12,4 +12,13 @@ class Cart < ApplicationRecord
     end
     new_item
   end
+
+  def buy_items
+    cart_items.where(cart_id: self.id).each do |cartitem|
+      item = Item.find(cartitem.item_id)
+      item.quantity -= cartitem.quantity
+      cartitem.destroy
+      item.save
+    end
+  end
 end

@@ -1,7 +1,7 @@
 class CreditCardsController < ApplicationController
   before_action :set_credit_card, only: [:show, :edit, :update, :destroy]
   before_action :reroute_visitor, except: []
-  before_action :hide_other_cards, except: [:index]
+  before_action :hide_other_cards, except: [:index, :new, :create]
 
   # GET /credit_cards
   # GET /credit_cards.json

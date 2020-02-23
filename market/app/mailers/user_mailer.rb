@@ -9,9 +9,9 @@ class UserMailer < ApplicationMailer
   end
 
   ## Email for list of purchases made
-  def purchase_email(user_email, purchase_items)
+  def purchase_email(user_email, cart)
   	## To be implemented
-    @purchase_items  = purchase_items
+    @cart  = cart
     mail(to: user_email, subject: 'Thank you for your recent purchase!')
   end
 

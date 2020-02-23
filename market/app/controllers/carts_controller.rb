@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy, :checkout]
+  before_action :set_cart, only: [:show, :edit, :update, :destroy, :checkout, :purchase, :process_purchase]
   before_action :reroute_visitor, except: []
   before_action :generate_otp, only: [:checkout]
   # before_action :hide_other_user_carts, except: [:index]
@@ -77,13 +77,33 @@ class CartsController < ApplicationController
     totp = ROTP::TOTP.new("base32secret3232", issuer: "My Service")
     if params[:commit] == "Submit"
       if totp.verify(params[:otp], drift_behind: 300)
-        redirect_to @cart, notice: 'Successful password verification'
+        redirect_to purchase_path, notice: 'Successful password verification'
       else
         format.html { redirect_to checkout_path, notice: 'Unsuccessful password verification' }
       end
     else
       UserMailer.otp_email(current_user.email, @otp).deliver_later
       end
+  end
+
+  def purchase
+    if params[:commit] == "Add Credit Card"
+      current_user.create_new_credit_card()
+    else
+      @items = CartItem.where(cart_id: @cart.id)
+    end
+  end
+
+  def process_purchase
+    if params[:cvv].to_s == CreditCard.find_by(card_num: params[:number]).card_cvv.to_s
+      UserMailer.purchase_email(current_user.email, @cart).deliver_later
+      @cart.buy_items
+      redirect_to items_path, notice: 'Thank you for your purchase! Check your email for your confirmation.'
+    else
+      redirect_to purchase_path, notice: 'The CVV provided did not match the one on file. Please try again or update your information'
+    end
+    # Email user
+    # Update purchase history
   end
 
 

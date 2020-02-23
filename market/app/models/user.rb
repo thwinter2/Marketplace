@@ -25,5 +25,9 @@ class User < ApplicationRecord
 			now.year - dob.year - ((now.month > dob.month || (now.month == dob.month && now.day >= dob.day)) ? 0 : 1)
 		end
 
+	def create_new_credit_card(credit_card_params)
+		credit_cards.new(credit_card_params)
+	end
+
 end
 
