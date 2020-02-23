@@ -52,13 +52,7 @@
           <h6 class="card-text">
             $<%= number_with_precision(item.cost, :precision => 2, :delimiter => ',') %>
           </h6>
-          <a href="<%= item_path(item) %>" class="btn btn-primary form-inline">Details</a>
-          <% if user_signed_in? %>
-            <%= form_tag(purchase_histories_path(purchase_history: {user_id: current_user.id, item_id: item.id, status: 'Purchasing'}), method: :post) %>
-              <%= submit_tag("Buy Now", class: 'btn btn-primary') %>
-          <% else %>
-            <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>
-          <% end %>
+          <a href="<%= item_path(item) %>" class="btn btn-primary form-inline stretched-link">Details</a>
         </div>
       </div>
     </div>

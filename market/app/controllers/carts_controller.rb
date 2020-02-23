@@ -1,6 +1,7 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :set_cart, only: [:show, :edit, :update, :destroy, :checkout, :purchase, :process_purchase]
   before_action :reroute_visitor, except: []
+  before_action :generate_otp, only: [:checkout]
   # before_action :hide_other_user_carts, except: [:index]
 
   # GET /carts
@@ -26,15 +27,7 @@ class CartsController < ApplicationController
   # POST /carts
   # POST /carts.json
   def create
-    @carts = Cart.where(user_id: current_user.id)
-    if @carts.any? and Cart.where(user_id: current_user.id).where(item_id: cart_params[:item_id]).take
-      @cart = Cart.where(user_id: current_user.id).where(item_id: cart_params[:item_id]).take
-      @cart.quantity = @cart.quantity += params[:quantity].to_i
-    else
-      @cart = Cart.new(cart_params)
-      @cart.quantity = params[:quantity]
-    end
-
+    @cart = Cart.new(cart_params)
 
     respond_to do |format|
       if @cart.save
@@ -71,22 +64,6 @@ class CartsController < ApplicationController
     end
   end
 
-
-  # # One click Buy Now option
-  # def buy_now
-  #   respond_to do |format|
-  #     # UserMailer.with(1).otp_email.deliver_later
-  #     puts("testing .............")
-  #     format.html { redirect_to buy_now, notice: 'One Time Password emailed.' }
-  #     break
-  #     # format.json { render :new }
-  #   end
-  # end
-
-  # # Verify otp
-  # def verify_otp
-  # end
-
   def clear
     Cart.where(user_id: current_user.id).delete_all
     flash[:notice] = 'You have cleared the cart!'
@@ -96,15 +73,52 @@ class CartsController < ApplicationController
       end
   end
 
+  def checkout
+    totp = ROTP::TOTP.new("base32secret3232", issuer: "My Service")
+    if params[:commit] == "Submit"
+      if totp.verify(params[:otp], drift_behind: 300)
+        redirect_to purchase_path, notice: 'Successful password verification'
+      else
+        format.html { redirect_to checkout_path, notice: 'Unsuccessful password verification' }
+      end
+    else
+      UserMailer.otp_email(current_user.email, @otp).deliver_later
+      end
+  end
+
+  def purchase
+    if params[:commit] == "Add Credit Card"
+      current_user.create_new_credit_card()
+    else
+      @items = CartItem.where(cart_id: @cart.id)
+    end
+  end
+
+  def process_purchase
+    if params[:cvv].to_s == CreditCard.find_by(card_num: params[:number]).card_cvv.to_s
+      UserMailer.purchase_email(current_user.email, @cart).deliver_later
+      @cart.buy_items
+      redirect_to items_path, notice: 'Thank you for your purchase! Check your email for your confirmation.'
+    else
+      redirect_to purchase_path, notice: 'The CVV provided did not match the one on file. Please try again or update your information'
+    end
+    # Email user
+    # Update purchase history
+  end
+
+
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_cart
-      @cart = Cart.find_by(user_id: current_user.id)
-    end
+
 
     # Only allow a list of trusted parameters through.
     def cart_params
-      params.require(:cart).permit(:user_id, :item_id, :quantity, :tax_slab, :price)
+      params.require(:cart).permit(:user_id, :item_id, :quantity, :tax_slab, :price, :otp)
+    end
+
+    def generate_otp
+      totp = ROTP::TOTP.new("base32secret3232", issuer: "My Service")
+      @otp = totp.now
     end
 
     # def hide_other_user_carts

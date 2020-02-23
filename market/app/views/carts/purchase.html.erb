@@ -1,0 +1,62 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Complete Purchase</h1>
+<h3> Please confirm that the items below are correct.</h3>
+<table class="table table-bordered">
+  <thead class="thead-light">
+  <tr>
+    <th scope="col"></th>
+    <th scope="col">Name</th>
+    <th scope="col">Quantity</th>
+    <th scope="col">Cost</th>
+    <th scope="col">Tax</th>
+    <th scope="col">
+      Discount
+      <% if current_user.age(current_user.dob) >= 65 %>
+        <br>
+        <span class="badge badge-success"><small>Senior Discount</small></span>
+      <% end %>
+    </th>
+    <th scope="col">Total Price</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% total_price = 0 %>
+  <% @items.each do |cartitem| %>
+    <% item = Item.find(cartitem.item_id) %>
+    <tr>
+      <td><img height="50px" style="object-fit: contain" src="<%= item.image %>"></td>
+      <td align="center"><strong><%= item.name %></strong></td>
+      <td align="center"><%= cartitem.quantity %></td>
+      <td align="center">$<%= cost = item.cost * cartitem.quantity %></td>
+      <td align="center">$<%= tax = ((item.cost * cartitem.quantity) * 0.07).round(2) %></td>
+      <td align="center">$<%= discount = current_user.age(current_user.dob) >= 65 ? ((cost + tax) * 0.1).round(2) : 0.00 %></td>
+      <td align="center">$<% total_price += cost + tax - discount %><%= cost + tax - discount %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<h4>You will be charged: $<%= total_price %></h4>
+<br>
+
+<% if current_user.credit_cards.size > 0 %>
+<h5>Please select a card below to be charged </h5>
+  <% cards_for_form = [] %>
+  <%= form_tag process_purchase_path do %>
+    <% current_user.credit_cards.each do |card| %>
+      <%= label_tag :number, 'Card ending in ...' + card.card_num.to_s.last(4) %>
+      <%= radio_button_tag :number, card.card_num, class: 'btn', required: true %>
+      <br>
+    <% end %>
+    <%= label_tag :cvv, 'CVV: ' %>
+    <%= number_field_tag :cvv, required: true  %>
+    <%= submit_tag "Complete Purchase" %>
+  <% end %>
+
+    <% cards_for_form.each do |card| %>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+<% end %>
