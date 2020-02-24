@@ -3,16 +3,20 @@ class UserMailer < ApplicationMailer
 
   ## Email for OTP
   def otp_email(user_email, otp)
-    # @otp  = "807413" # to be randomized
     @otp = otp
-    mail(to: user_email, subject: 'OTP for Quick Purchase')
+    mail(to: user_email, subject: 'OTP for Purchase') do |format|
+      format.html
+    end
   end
 
   ## Email for list of purchases made
   def purchase_email(user_email, cart)
-  	## To be implemented
     @cart  = cart
-    mail(to: user_email, subject: 'Thank you for your recent purchase!')
+    puts("************************* Purchased Cart *******************")
+    puts(@cart)
+    mail(to: user_email, subject: 'Thank you for your recent purchase!') do |format|
+      format.html
+    end
   end
 
   ## Email for when items become available in wishlist

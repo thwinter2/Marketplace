@@ -9,6 +9,7 @@
 
 # Ignore
 .idea
+.idea/
 
 # Ignore bundler config.
 /.bundle

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hi</p>
+    <p>
+      Here is a summary of your purchase: <%= @cart.id %>
+
+    <% CartItem.where(cart_id: @cart.id).each do |cartitem| %>
+      <%= @cart.id %>
+      <% item = Item.find(cartitem.item_id) %>
+      <%= item_name = item.name %>
+      <%= item_quantity cartitem.quantity %>
+      <b><%= item_name %></b>
+      <b><%= item_quantity %></b>
+    <% end %>
+  </p>
+  </body>
+</html>
