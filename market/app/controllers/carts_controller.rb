@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :set_cart, only: [:show, :edit, :update, :destroy, :checkout, :purchase, :process_purchase]
+  before_action :set_cart, only: [:show, :edit, :update, :destroy, :checkout, :purchase, :process_purchase, :clear]
   before_action :reroute_visitor, except: []
   before_action :generate_otp, only: [:checkout]
   # before_action :hide_other_user_carts, except: [:index]
@@ -65,10 +65,9 @@ class CartsController < ApplicationController
   end
 
   def clear
-    Cart.where(user_id: current_user.id).delete_all
-    flash[:notice] = 'You have cleared the cart!'
+    CartItem.where(cart_id: @cart).delete_all
     respond_to do |format|
-      format.html { redirect_to carts_url, notice: 'Cart was successfully destroyed.' }
+      format.html { redirect_to @cart, notice: 'Cart was successfully cleared.' }
       format.json { head :no_content }
       end
   end

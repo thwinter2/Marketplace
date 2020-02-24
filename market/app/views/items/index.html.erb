@@ -15,8 +15,8 @@
               items_path(order_by: 'views_count ASC'), :class => 'nav-link btn btn-primary', :style => 'margin: 5px'  %>
 </nav>
 
-<nav class="navbar navbar-expand-lg">
-  <div class="d-inline px-1">
+<nav class="navbar navbar-expand-lg row">
+  <div class="d-inline">
     <% category_select_options = [] %>
     <% Item.where("category != ''").each do |item| %>
       <% category_select_options.push item.category %>
@@ -27,7 +27,7 @@
       <%= submit_tag("Filter by Category", class: 'btn btn-primary') %>
     <% end %>
   </div>
-  <div class="d-inline px-1">
+  <div class="d-inline" style="padding-left: 15px">
     <% brand_select_options = [] %>
     <% Item.where("brand != ''").each do |item| %>
       <% brand_select_options.push item.brand %>
@@ -38,12 +38,15 @@
       <%= submit_tag("Filter by Brand", class: 'btn btn-primary') %>
     <% end %>
   </div>
-  <div class="d-inline px-1">
+  <div class="d-inline" style="padding-left: 15px">
     <%= form_tag(items_path, method: :get) do %>
-      <%= label_tag(:search_availability, "In Stock: ") %>
+      <%= label_tag(:search_availability, "In Stock?: ") %>
       <%= check_box_tag(:search_availability) %>
-      <%= submit_tag("Show Availability", class: 'btn btn-primary') %>
+      <%= submit_tag("Filter by Availability", class: 'btn btn-primary') %>
     <% end %>
+  </div>
+  <div style="padding-left: 50px">
+    <a href="<%= items_path %>" class="btn btn-primary">Clear Filters</a>
   </div>
 </nav>
 
