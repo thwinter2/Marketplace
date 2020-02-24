@@ -17,16 +17,24 @@
 
 <nav class="navbar navbar-expand-lg">
   <div class="d-inline px-1">
+    <% category_select_options = [] %>
+    <% Item.where("category != ''").each do |item| %>
+      <% category_select_options.push item.category %>
+    <% end %>
     <%= form_tag(items_path, method: :get) do %>
       <%= label_tag(:search_category, "Category: ") %>
-      <%= text_field_tag(:search_category, params[:category]) %>
+      <%= select_tag :search_category, options_for_select(category_select_options.uniq), include_blank: true %>
       <%= submit_tag("Filter by Category", class: 'btn btn-primary') %>
     <% end %>
   </div>
   <div class="d-inline px-1">
+    <% brand_select_options = [] %>
+    <% Item.where("brand != ''").each do |item| %>
+      <% brand_select_options.push item.brand %>
+    <% end %>
     <%= form_tag(items_path, method: :get) do %>
       <%= label_tag(:search_brand, "Brand: ") %>
-      <%= text_field_tag(:search_brand) %>
+      <%= select_tag :search_brand, options_for_select(brand_select_options.uniq), include_blank: true %>
       <%= submit_tag("Filter by Brand", class: 'btn btn-primary') %>
     <% end %>
   </div>
