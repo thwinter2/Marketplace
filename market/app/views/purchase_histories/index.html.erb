@@ -13,13 +13,9 @@
     <% @purchase_histories.each do |purchase_history| %>
       <tr>
         <td><%= link_to 'Show', purchase_history %></td>
-        <td><%= link_to 'Edit', edit_purchase_history_path(purchase_history) %></td>
-        <td><%= link_to 'Destroy', purchase_history, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
-
-<%= link_to 'New Purchase History', new_purchase_history_path %>

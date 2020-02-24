@@ -25,13 +25,17 @@ class CartItemsController < ApplicationController
   # POST /cart_items
   # POST /cart_items.json
   def create
-    if params[:commit] == "Add to Cart"
-      @cart.add_item(params)
-      if @cart.save
+    @cart.add_item(params)
+    if @cart.save
+      if params[:commit] == "Add to Cart"
         redirect_to cart_path(@cart.id)
+      elsif params[:commit] == "Buy Now"
+        redirect_to checkout_path
+      else
+        redirect_to items_path
       end
     else
-      redirect_to items_path
+      redirect_to items_path 
     end
 
 
