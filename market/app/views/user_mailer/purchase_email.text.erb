@@ -1,5 +1,9 @@
 Thank you for your recent purchase.
 ===============================================
 
-Your purchase is complete.
-Thank you for using our service: <%= @purchase_items %>
+Your purchase is complete. Here are the items you purchased:
+<%= @cart.item_id %>
+<%= @cart.name %>
+<%= @cart.quantity %>
+
+Thank you for using our service.

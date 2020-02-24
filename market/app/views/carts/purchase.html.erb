@@ -59,4 +59,6 @@
     </tbody>
   </table>
 <% else %>
+<h5>Could not find an active credit card in your profile</h5>
+<%= link_to 'Click here to add a new credit card', new_credit_card_path %>
 <% end %>
