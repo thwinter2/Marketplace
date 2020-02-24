@@ -6,7 +6,7 @@
   <body>
     <p>Hi</p>
     <p>
-      Here is a summary of your purchase: <%= @cart.id %>
+      Here is a summary of your purchase
 
     <% CartItem.where(cart_id: @cart.id).each do |cartitem| %>
       <%= @cart.id %>
