@@ -96,7 +96,7 @@ class CartsController < ApplicationController
   def process_purchase
     if params[:cvv].to_s == CreditCard.find_by(card_num: params[:number]).card_cvv.to_s
       notice = @cart.buy_items
-      UserMailer.with(user: current_user, cart: @cart).purchase_email(current_user.email, @cart).deliver_later
+      UserMailer.with(user: current_user, cart: @cart).purchase_email(current_user.email, @cart).deliver_now
       @cart.clear
       redirect_to items_path, notice: notice == '' ? 'Thank you for your purchase! Check your email for your confirmation.' : notice.to_s
     else

@@ -32,6 +32,7 @@ class Cart < ApplicationRecord
         item.save
       else
         notice += 'The ' + item.name + ' is a special item, and requires admin approval. You will be notified when it is approved. '
+        cartitem.destroy
       end
     end
     notice
