@@ -2,6 +2,38 @@
 
 <h1>Purchase Histories</h1>
 
+<div class="row">
+  <% if current_user.admin? %>
+    <div style="padding-left: 25px">
+      <% item_options = [] %>
+      <% PurchaseHistory.where("item_id != ''").each do |purchase_history| %>
+        <% item = Item.find(purchase_history.item_id) %>
+        <% item_options.push [item.name, purchase_history.item_id] %>
+      <% end %>
+      <%= form_tag(purchase_histories_path, method: :get) do %>
+        <%= label_tag(:item_search, "Item: ") %>
+        <%= select_tag :item_search, options_for_select(item_options.uniq), include_blank: true %>
+        <%= submit_tag("Filter by Item", class: 'btn btn-primary') %>
+      <% end %>
+    </div>
+    <div style="padding-left: 25px">
+      <% user_options = [] %>
+      <% PurchaseHistory.where("user_id != ''").each do |purchase_history| %>
+        <% user = User.find(purchase_history.user_id) %>
+        <% user_options.push [user.name, purchase_history.user_id] %>
+      <% end %>
+      <%= form_tag(purchase_histories_path, method: :get) do %>
+        <%= label_tag(:user_search, "User: ") %>
+        <%= select_tag :user_search, options_for_select(user_options.uniq), include_blank: true %>
+        <%= submit_tag("Filter by User", class: 'btn btn-primary') %>
+      <% end %>
+    </div>
+    <div style="padding-left: 50px">
+      <a href="<%= purchase_histories_path %>" class="btn btn-primary">Clear Filters</a>
+    </div>
+  <% end %>
+</div>
+
 <table class="table">
   <thead class="thead-light">
     <tr>

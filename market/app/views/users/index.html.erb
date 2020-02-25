@@ -7,6 +7,9 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
+      <% if user_signed_in? and current_user.admin? %>
+        <th scope="col"></th>
+      <% end %>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -22,6 +25,9 @@
           <%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-primary' %>
         <% end %>
         </td>
+        <% if user_signed_in? and current_user.admin? %>
+        <td><%= link_to 'View Purchase History', purchase_histories_path(:user_search => user.id), :class => 'btn btn-primary' %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

@@ -6,7 +6,20 @@ class PurchaseHistoriesController < ApplicationController
   # GET /purchase_histories
   # GET /purchase_histories.json
   def index
-    @purchase_histories = PurchaseHistory.all
+    if current_user.admin?
+      if !params[:item_search].nil?
+        @purchase_histories = PurchaseHistory.where(item_id: params[:item_search])
+      elsif !params[:user_search].nil?
+        @purchase_histories = PurchaseHistory.where(user_id: params[:user_search])
+      else
+        @purchase_histories = PurchaseHistory.all
+      end
+      if @purchase_histories.size == 0
+        @purchase_histories = PurchaseHistory.all
+      end
+    else
+      @purchase_histories = PurchaseHistory.where(user_id: current_user.id)
+    end
   end
 
   # GET /purchase_histories/1
@@ -75,6 +88,6 @@ class PurchaseHistoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def purchase_history_params
-      params.require(:purchase_history).permit(:user_id, :item_id, :status, :quantity)
+      params.require(:purchase_history).permit(:user_id, :item_id, :status, :quantity, :item_search, :user_search)
     end
 end
