@@ -10,7 +10,7 @@
         <%= @item.name %>
       </h2>
       <% if @item.special_item %>
-        <span class="badge badge-pill badge-info">Special Item</span>
+        <span class="badge badge-pill badge-info" title="Special Items require approval by an admin!">Special Item</span>
       <% end %>
       <% if @item.age_restricted %>
           <span class="badge badge-pill badge-info">Age-Restricted</span>

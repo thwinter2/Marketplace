@@ -88,6 +88,6 @@ class UsersController < ApplicationController
     end
 
     def hide_other_users
-      redirect_to users_url unless @user.id.equal?(current_user.id) or current_user.admin?
+      redirect_to users_url unless current_user.admin? or @user.id.equal?(current_user.id)
     end
 end

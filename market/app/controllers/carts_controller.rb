@@ -78,7 +78,7 @@ class CartsController < ApplicationController
       if totp.verify(params[:otp], drift_behind: 300)
         redirect_to purchase_path, notice: 'Successful password verification'
       else
-        format.html { redirect_to checkout_path, notice: 'Unsuccessful password verification' }
+        redirect_to checkout_path, notice: 'Unsuccessful password verification'
       end
     else
       UserMailer.otp_email(current_user.email, @otp).deliver_later
@@ -95,9 +95,10 @@ class CartsController < ApplicationController
 
   def process_purchase
     if params[:cvv].to_s == CreditCard.find_by(card_num: params[:number]).card_cvv.to_s
+      notice = @cart.buy_items
       UserMailer.with(user: current_user, cart: @cart).purchase_email(current_user.email, @cart).deliver_later
-      @cart.buy_items
-      redirect_to items_path, notice: 'Thank you for your purchase! Check your email for your confirmation.'
+      @cart.clear
+      redirect_to items_path, notice: notice == '' ? 'Thank you for your purchase! Check your email for your confirmation.' : notice.to_s
     else
       redirect_to purchase_path, notice: 'The CVV provided did not match the one on file. Please try again or update your information'
     end

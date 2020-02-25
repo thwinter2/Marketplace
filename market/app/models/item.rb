@@ -1,7 +1,7 @@
 class Item < ApplicationRecord
 	# belongs_to :cart
 	# belongs_to :wishlist
-	has_one :purchase_histories, :class_name => 'PurchaseHistory', :foreign_key => 'item_id'
+	has_many :purchase_histories, :class_name => 'PurchaseHistory', :foreign_key => 'item_id', dependent: :delete_all
 
 	def self.search_category(category)
 		if category != ""

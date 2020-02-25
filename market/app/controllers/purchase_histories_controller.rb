@@ -75,6 +75,6 @@ class PurchaseHistoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def purchase_history_params
-      params.require(:purchase_history).permit(:user_id, :item_id, :status)
+      params.require(:purchase_history).permit(:user_id, :item_id, :status, :quantity)
     end
 end
