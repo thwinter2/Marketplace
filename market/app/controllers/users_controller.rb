@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :reroute_visitor, except: []
-  before_action :hide_other_users, except: [:index]
-  before_action :set_cart, only: [:new, :create]
+  #before_action :reroute_visitor, except: []
+  #before_action :hide_other_users, except: [:index]
+  #before_action :set_cart, only: [:new, :create]
+  #after_action :keep_admin_logged_in, only: [:create]
   
   # GET /users
   # GET /users.json
@@ -36,7 +37,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
-        format.html { redirect_to new_session_path(email: 'market5172020@gmail.com', password: 'password'), notice: 'User was successfully created.' }
+        format.html { redirect_to root_path, notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -50,7 +51,8 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        sign_in(@user,:bypass => true)
+        format.html { redirect_to root_path, notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -89,5 +91,9 @@ class UsersController < ApplicationController
 
     def hide_other_users
       redirect_to users_url unless current_user.admin? or @user.id.equal?(current_user.id)
+    end
+
+    def keep_admin_logged_in
+      sign_in(email: 'market5172020@gmail.com', password: 'password')
     end
 end

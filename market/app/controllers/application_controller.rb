@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
      end
 
      def reroute_visitor_and_regular_user
-     	redirect_to items_url unless !current_user.nil? or !current_user.admin?
+     	redirect_to items_url unless !current_user.nil? and current_user.admin?
      end
 
      def set_cart
