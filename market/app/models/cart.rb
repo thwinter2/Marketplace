@@ -26,6 +26,11 @@ class Cart < ApplicationRecord
         cartitem.destroy
         next
       end
+      if user.age(user.dob) < 18 and item.age_restricted?
+        notice += 'The ' + item.name + ' is restricted to users above the age of 18. '
+        cartitem.destroy
+        next
+      end
       purchase_history = cartitem.create_purchase_history(user)
       if purchase_history.status == 'Purchased'
         item.quantity -= cartitem.quantity
