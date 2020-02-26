@@ -32,7 +32,12 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<%= purchase_histories_path %>">Purchase History</a>
-        </li>        
+        </li>
+        <% if current_user.admin? %>
+          <li class="nav-item">
+            <a class="nav-link" href="<%= requests_path %>">Requests</a>
+          </li>
+        <% end %>
         <li class="nav-item">
           <a class="nav-link" href="<%= wishlists_path %>">Wishlist</a>
         </li>

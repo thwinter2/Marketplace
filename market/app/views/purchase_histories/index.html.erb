@@ -64,7 +64,7 @@
           <% before_tax = purchase_history.quantity * item.cost %>
           <% with_tax = 1.07*before_tax %>
           <% discount = user.age(user.dob) >= 65 ? with_tax*0.1 : 0 %>
-          <%= number_to_currency(with_tax - discount) %></td> <!-- TODO: Tax -->
+          <%= purchase_history.status == "Rejected" ? number_to_currency(0) : number_to_currency(with_tax - discount) %></td> <!-- TODO: Tax -->
         <td><%= purchase_history.created_at %></td>
       </tr>
     <% end %>

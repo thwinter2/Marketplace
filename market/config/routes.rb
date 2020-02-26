@@ -21,6 +21,8 @@ Rails.application.routes.draw do
   get '/purchase', to: 'carts#purchase', as: 'purchase'
   post 'process_purchase', to: 'carts#process_purchase', as: 'process_purchase'
   post '/verify_otp', to: 'items#verify_otp', as: 'verify_otp'
+  get '/requests', to: 'purchase_histories#requests', as: 'requests'
+  post '/admin_response', to: 'purchase_histories#admin_response', as: 'admin_response'
 
   root 'items#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
