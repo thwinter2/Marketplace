@@ -10,9 +10,15 @@ class UserMailer < ApplicationMailer
   end
 
   ## Email for list of purchases made
+  def special_item_email(user_email)
+    mail(to: user_email, subject: 'An admin has given feedback on your special item request!') do |format|
+      format.html
+    end
+  end
+
+  ## Email for list of purchases made
   def purchase_email(user_email, cart)
     @cart  = cart
-    puts("************************* Purchased Cart *******************")
     puts(@cart)
     mail(to: user_email, subject: 'Thank you for your recent purchase!') do |format|
       format.html

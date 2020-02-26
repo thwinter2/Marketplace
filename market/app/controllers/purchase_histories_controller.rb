@@ -1,6 +1,7 @@
 class PurchaseHistoriesController < ApplicationController
   before_action :set_purchase_history, only: [:show, :edit, :update, :destroy]
   before_action :reroute_visitor, except: []
+  before_action :reroute_visitor_and_regular_user, only: [:requests]
 
 
   # GET /purchase_histories
@@ -78,6 +79,27 @@ class PurchaseHistoriesController < ApplicationController
       format.html { redirect_to purchase_histories_url, notice: 'Purchase history was successfully destroyed.' }
       format.json { head :no_content }
     end
+  end
+
+  def requests
+    @purchase_histories = PurchaseHistory.where("status LIKE ?", "%" + 'Pending' + "%")
+  end
+
+  def admin_response
+    purchase_history = PurchaseHistory.find(params[:purchase_history])
+    item = Item.find(purchase_history.item_id)
+    if params[:response] == true
+      puts 'Approved!'
+      item.quantity -= purchase_history.quantity
+      item.save
+      purchase_history.status = 'Purchased'
+    else
+      puts 'Rejected'
+      purchase_history.status = 'Rejected'
+    end
+    puts purchase_history.save
+    UserMailer.with(purchase_history: purchase_history, user: User.find(purchase_history.user_id)).special_item_email(User.find(purchase_history.user_id).email).deliver_later
+    redirect_to requests_path, notice: 'You have responded to a request'
   end
 
   private

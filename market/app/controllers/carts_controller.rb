@@ -96,8 +96,12 @@ class CartsController < ApplicationController
   def process_purchase
     if params[:cvv].to_s == CreditCard.find_by(card_num: params[:number]).card_cvv.to_s
       notice = @cart.buy_items
-      UserMailer.with(user: current_user, cart: @cart).purchase_email(current_user.email, @cart).deliver_now
-      @cart.clear
+      if CartItem.where(cart_id: @cart.id).size > 0
+        UserMailer.with(user: current_user, cart: @cart).purchase_email(current_user.email, @cart).deliver_now
+        @cart.clear
+      else
+        notice += 'Unfortunately, no purchases could be made at this time. '
+      end
       redirect_to items_path, notice: notice == '' ? 'Thank you for your purchase! Check your email for your confirmation.' : notice.to_s
     else
       redirect_to purchase_path, notice: 'The CVV provided did not match the one on file. Please try again or update your information'
