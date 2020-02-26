@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_25_141819) do
+ActiveRecord::Schema.define(version: 2020_02_26_042127) do
 
   create_table "admin_users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 2020_02_25_141819) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "quantity"
+    t.string "return"
     t.index ["item_id"], name: "index_purchase_histories_on_item_id"
     t.index ["user_id"], name: "index_purchase_histories_on_user_id"
   end

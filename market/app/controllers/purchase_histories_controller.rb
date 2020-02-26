@@ -85,20 +85,44 @@ class PurchaseHistoriesController < ApplicationController
     @purchase_histories = PurchaseHistory.where("status LIKE ?", "%" + 'Pending' + "%")
   end
 
+  def return_requests
+    purchase_history = PurchaseHistory.find(params[:purchase_history])
+    purchase_history.return = 'Pending'
+    purchase_history.status = 'Pending Return'
+    purchase_history.save
+    redirect_to purchase_histories_path, notice: 'Return has been requested. You will be contacted when an administrator makes a decision.'
+  end
+
   def admin_response
     purchase_history = PurchaseHistory.find(params[:purchase_history])
     item = Item.find(purchase_history.item_id)
-    if params[:response] == true
+    puts params[:response]
+    if params[:response] == true or params[:response] == 'true'
       puts 'Approved!'
-      item.quantity -= purchase_history.quantity
-      item.save
-      purchase_history.status = 'Purchased'
+      if purchase_history.status == 'Pending Approval'
+        item.quantity -= purchase_history.quantity
+        purchase_history.status = 'Purchased'
+      else
+        item.quantity += purchase_history.quantity
+        purchase_history.status = 'Return Approved'
+        purchase_history.return = 'Returned'
+      end
     else
       puts 'Rejected'
-      purchase_history.status = 'Rejected'
+      if purchase_history.status == 'Pending Approval'
+        purchase_history.status = 'Rejected'
+      else
+        purchase_history.status = 'Return Rejected'
+        purchase_history.return = 'Return Rejected'
+      end
     end
-    puts purchase_history.save
-    UserMailer.with(purchase_history: purchase_history, user: User.find(purchase_history.user_id)).special_item_email(User.find(purchase_history.user_id).email).deliver_later
+    purchase_history.save
+    item.save
+    if purchase_history.status.include? 'Return'
+      UserMailer.with(purchase_history: purchase_history, user: User.find(purchase_history.user_id)).return_request_email(User.find(purchase_history.user_id).email).deliver_later
+    else
+      UserMailer.with(purchase_history: purchase_history, user: User.find(purchase_history.user_id)).special_item_email(User.find(purchase_history.user_id).email).deliver_later
+    end
     redirect_to requests_path, notice: 'You have responded to a request'
   end
 

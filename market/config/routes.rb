@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   post '/verify_otp', to: 'items#verify_otp', as: 'verify_otp'
   get '/requests', to: 'purchase_histories#requests', as: 'requests'
   post '/admin_response', to: 'purchase_histories#admin_response', as: 'admin_response'
+  get '/return_requests', to: 'purchase_histories#return_requests', as: 'return_requests'
 
   root 'items#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
