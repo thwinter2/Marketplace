@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<p>Hi <%= params[:user].name %>,</p>
+<p>
+  <% purchase_history = params[:purchase_history] %>
+  <% item = Item.find(purchase_history.item_id) %>
+  <% taxed_cost = purchase_history.quantity * item.cost * 1.07 %> <!-- TODO: Tax -->
+  <% discount = params[:user].age(params[:user].dob) >= 65 ? taxed_cost * 0.1 : 0 %>
+  <% if purchase_history.status == 'Return Approved' %>
+    An administrator has approved your return of <%= purchase_history.quantity %> <%= item.name %><%= purchase_history.quantity > 1 ? 's' : '' %>! You have been
+    returned <%= number_to_currency(taxed_cost - discount) %> to the credit card used for the purchase. Thank you!
+  <% else %>
+    An administrator has rejected your request to return <%= purchase_history.quantity %> <%= item.name %><%= purchase_history.quantity > 1 ? 's' : '' %>.
+
+    Please contact the administrator at market5172020@gmail.com for more information. Thank you!
+  <% end %>
+</p>
+</body>
+</html>
