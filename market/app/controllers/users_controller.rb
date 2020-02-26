@@ -1,9 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  #before_action :reroute_visitor, except: []
-  #before_action :hide_other_users, except: [:index]
-  #before_action :set_cart, only: [:new, :create]
-  #after_action :keep_admin_logged_in, only: [:create]
+  before_action :reroute_visitor, except: []
+  before_action :hide_other_users, except: [:index]
+  before_action :set_cart, only: [:new, :create]
   
   # GET /users
   # GET /users.json
@@ -91,9 +90,5 @@ class UsersController < ApplicationController
 
     def hide_other_users
       redirect_to users_url unless current_user.admin? or @user.id.equal?(current_user.id)
-    end
-
-    def keep_admin_logged_in
-      sign_in(email: 'market5172020@gmail.com', password: 'password')
     end
 end
