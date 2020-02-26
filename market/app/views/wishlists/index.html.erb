@@ -16,12 +16,8 @@
           <h6 class="card-text">
             $<%= number_with_precision(item.cost, :precision => 2, :delimiter => ',') %>
           </h6>
-          <a href="<%= item_path(item) %>" class="btn btn-primary stretched-link">Details</a>
-          <% if user_signed_in? %>
-            <a href="<%= button_path %>" class="btn btn-primary">Buy now</a>
-          <% else %>
-            <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>
-          <% end %>
+          <a href="<%= item_path(item) %>" class="btn btn-primary">Details</a>
+          <%= link_to 'Remove', wishlist, method: :delete, :class => 'btn btn-primary' %>
         </div>
       </div>
     </div>

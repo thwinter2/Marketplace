@@ -57,6 +57,12 @@
         <div class="card-header"><img class="card-img-top" height="200px" style="object-fit: contain" src="<%= item.image %>"></div>
         <div class="card-body">
           <h5 class="card-title"><strong><%= item.name %></strong></h5>
+          <% if item.age_restricted %>
+            <span class="card-subtitle badge badge-info">Age Restricted</span>
+          <% end %>
+          <% if item.special_item %>
+            <span class="card-subtitle badge badge-info">Special Item</span>
+          <% end %>
           <p class="card-text" style="height: 150px; overflow: auto"><%= item.description %></p>
         </div>
         <div class="card-footer" style="text-align: center">
