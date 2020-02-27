@@ -15,7 +15,7 @@ class User < ApplicationRecord
 	validates :name, :phone, :dob, :street_addres, :city, :state, :zip, presence: true
 	validates :phone, format: {with: /\d{3}-\d{3}-\d{4}/}
 	validates :zip, format: {with: /\d{5}/}
-	validates :street_addres, format: {with: /\d+ [a-zA-Z]+ [a-zA-Z]+,?.*/}
+	validates :street_addres, format: {with: /\d+ .*/}
 
 		def age(dob)
 			now = Time.now.utc.to_date
