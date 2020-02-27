@@ -12,13 +12,6 @@ class ApplicationController < ActionController::Base
      	redirect_to items_url unless !current_user.nil? and current_user.admin?
      end
 
-     def keep_admin_logged_in
-          puts("keep_admin_logged_in")
-          sign_out(:user)
-          sign_in(User.first, :bypass => true)
-          redirect_to users_url
-     end
-
      def set_cart
           if user_signed_in?
                @cart = Cart.find_by(user_id: current_user.id)

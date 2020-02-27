@@ -65,3 +65,7 @@ gem 'rotp'
 
 # Icons
 gem 'font-awesome-rails'
+
+#RSpec
+gem 'rspec'
+gem 'rspec-rails'
