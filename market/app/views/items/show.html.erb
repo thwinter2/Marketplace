@@ -40,13 +40,22 @@
         <%= link_to 'View Purchase History', purchase_histories_path(:item_search => @item.id), :class => 'btn btn-primary' %>
         <%= link_to 'Edit', edit_item_path(@item), :class => 'btn btn-secondary ml-4' %>
         <%= link_to 'Destroy', @item, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-secondary mx-1' %>
-
       <% end %>
-      <%= form_tag(cart_items_path(item: {user_id: current_user.id, item_id: @item.id}), method: :post) do %>
-        <%= label_tag(:quantity, "Quantity: ") %>
-        <%= number_field_tag(:quantity, 1, min: 1, max: @item.quantity) %>
-        <%= submit_tag("Add to Cart", class: 'btn btn-primary') %>
-        <%= submit_tag("Buy Now", class: 'btn btn-primary') %>
+      <% if @item.quantity > 0 %>
+        <%= form_tag(cart_items_path(item: {user_id: current_user.id, item_id: @item.id}), method: :post) do %>
+          <%= label_tag(:quantity, "Quantity: ") %>
+          <%= number_field_tag(:quantity, 1, min: 1, max: @item.quantity) %>
+          <%= submit_tag("Add to Cart", class: 'btn btn-primary') %>
+          <%= submit_tag("Buy Now", class: 'btn btn-primary') %>
+        <% end %>
+      <% elsif SubscribedUser.where(user_id: current_user.id, item_id: @item.id).size > 0 %>
+        <div>
+          <%= link_to 'Subscribe to Availability', subscribe_to_availability_path(item_id: @item.id), :class => 'btn btn-primary disabled' %>
+        </div>
+      <% else %>
+        <div>
+          <%= link_to 'Subscribe to Availability', subscribe_to_availability_path(item_id: @item.id), :class => 'btn btn-primary' %>
+        </div>
       <% end %>
     <% else %>
       <a href="<%= new_user_registration_path %>" class="btn btn-primary">Register</a>

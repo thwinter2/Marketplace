@@ -31,6 +31,12 @@ class UserMailer < ApplicationMailer
     end
   end
 
+  def availability_email(user_email)
+    mail(to: user_email, subject: 'An item you were watching is back in stock!') do |format|
+      format.html
+    end
+  end
+
   ## Email for when items become available in wishlist
   def wishlist_email(user_email)
   	## To be implemented
