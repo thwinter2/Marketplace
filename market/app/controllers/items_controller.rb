@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :set_item, only: [:show, :edit, :update, :destroy]
-  before_action :reroute_visitor_and_regular_user, except: [:index, :show, :buy_now, :verify_otp]
+  before_action :reroute_visitor_and_regular_user, except: [:index, :show, :buy_now, :verify_otp, :subscribe_to_availability]
 
   # GET /items
   # GET /items.json
@@ -37,6 +37,15 @@ class ItemsController < ApplicationController
 
   # GET /items/1/edit
   def edit
+    item = Item.find(params[:id])
+    if item.quantity > 0
+      @subscribed_users = SubscribedUser.where(item_id: item.id)
+      @subscribed_users.each do |items|
+        puts 'HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH'
+        items.destroy
+        puts 'HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH'
+      end
+    end
   end
 
   # POST /items
@@ -59,6 +68,19 @@ class ItemsController < ApplicationController
   # PATCH/PUT /items/1
   # PATCH/PUT /items/1.json
   def update
+    puts params[:item]
+    if params[:item][:quantity].to_i > 0
+      SubscribedUser.where(item_id: params[:id]).each do |subscribed_user|
+        puts 'TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'
+        user = User.find(subscribed_user.user_id)
+        puts user.name
+        puts 'TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT'
+        UserMailer.with(user: user, item: Item.find(params[:id])).availability_email(user.email).deliver_now
+        subscribed_user.destroy
+      end
+    end
+
+
     respond_to do |format|
       if @item.update(item_params)
         format.html { redirect_to @item, notice: 'Item was successfully updated.' }
@@ -108,6 +130,13 @@ class ItemsController < ApplicationController
       end
     # original_otp = User.find(current_user.id).email
     # respond_to do |format|
+    end
+  end
+
+  def subscribe_to_availability
+    @subscribed_user = SubscribedUser.new(item_id: params[:item_id], user_id: current_user.id)
+    if @subscribed_user.save
+      redirect_to items_path, notice: 'You will receive an email when this item is back in stock'
     end
   end
 

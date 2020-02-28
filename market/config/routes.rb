@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get '/requests', to: 'purchase_histories#requests', as: 'requests'
   post '/admin_response', to: 'purchase_histories#admin_response', as: 'admin_response'
   get '/return_requests', to: 'purchase_histories#return_requests', as: 'return_requests'
+  get '/subscribe_to_availability', to: 'items#subscribe_to_availability', as: 'subscribe_to_availability'
 
   root 'items#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
