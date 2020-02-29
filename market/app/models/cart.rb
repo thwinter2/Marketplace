@@ -15,10 +15,7 @@ class Cart < ApplicationRecord
 
   ## For Buy Now option
   def buy_now(item_params)
-    puts("---------==============---------------=============--------------")
-    puts(item_params)
     new_item = cart_items.new(item_id: item_params[:item][:item_id], quantity: item_params[:quantity], buy_now: item_params[:buy_now], cart_id: self.id)
-
   end
 
   def buy_items

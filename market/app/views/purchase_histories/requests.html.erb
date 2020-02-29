@@ -31,7 +31,7 @@
         <% before_tax = purchase_history.quantity * item.cost %>
         <% with_tax = (1 + (item.tax_slab.to_f)/100) * before_tax %>
         <% discount = user.age(user.dob) >= 65 ? with_tax*0.1 : 0 %>
-        <%= number_to_currency(with_tax - discount) %></td> <!-- TODO: Tax -->
+        <%= number_to_currency(with_tax - discount) %></td>
       <% else %>
         <td></td>
       <% end %>

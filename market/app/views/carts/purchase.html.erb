@@ -23,7 +23,6 @@
   <tbody>
   <% total_price = 0 %>
   <% if @items.find {|item| item["buy_now"] == true} %>
-    <% puts("CHECKING FOR BUY NOW") %>
     <% buy_now_cart_item = @items.find {|item| item["buy_now"] == true} %>
     <% item = Item.find(buy_now_cart_item.item_id) %>
     <tr>
@@ -76,7 +75,6 @@
   </table>
 <% else %>
 <% if @items.find {|item| item["buy_now"] == true} %>
-    <% puts("CREDIT CARD CHECK FOR BUY NOW") %>
     <% buy_now_cart_item = @items.find {|item| item["buy_now"] == true} %>
     <% buy_now_cart_item.destroy%>
 <% end %>
