@@ -19,16 +19,16 @@
       <h4>Brand: <%= @item.brand %></h4>
       <h4>Category: <%= @item.category %></h4><br>
       <h5>Quantity: <%= @item.quantity %></h5>
-      <h5>Tax Slab: <%= @item.tax_slab %></h5>
+      <h5>Tax Slab (%): <%= @item.tax_slab %></h5>
       <h5>Views: <%= @item.views_count %></h5><br>
       <h4>
-        Price per Item:
+        Price per Item (inclusive of taxes, & discounts):
         <% if user_signed_in? and current_user.dob? %>
           <% discount_rate = User.find(current_user.id).age(current_user.dob) >= 65 ? 0.1 : 0 %>
         <% else %>
           <% discount_rate = 0 %>
         <% end %>
-        <% item_cost = @item.cost * 1.07 %>
+        <% item_cost = @item.cost * (1 + (@item.tax_slab.to_f)/100) %>
         $<%= (item_cost - item_cost*discount_rate).round(2) %>
       </h4>
     </div>

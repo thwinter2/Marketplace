@@ -29,7 +29,7 @@
         <td align="center"><strong><%= item.name %></strong></td>
         <td align="center"><%= cartitem.quantity %></td>
         <td align="center">$<%= cost = item.cost * cartitem.quantity %></td>
-        <td align="center">$<%= tax = ((item.cost * cartitem.quantity) * 0.07).round(2) %></td>
+        <td align="center">$<%= tax = ((item.cost * cartitem.quantity) * (item.tax_slab.to_f)/100).round(2) %></td>
         <td align="center">$<%= discount = current_user.age(current_user.dob) >= 65 ? ((cost + tax) * 0.1).round(2) : 0.00 %></td>
         <td align="center">$<% total_price += cost + tax - discount %><%= cost + tax - discount %></td>
         <td align="center">

@@ -57,8 +57,8 @@
   </div>
 
   <div class="field">
-    <%= form.label :tax_slab %>
-    <%= form.text_field :tax_slab %>
+    <%= form.label :"Tax Slab (%)" %>
+    <%= form.select :tax_slab, ["5","10","12.5"]%>
   </div>
 
   <div class="actions">
