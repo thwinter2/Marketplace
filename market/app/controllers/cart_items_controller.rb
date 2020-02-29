@@ -25,18 +25,53 @@ class CartItemsController < ApplicationController
   # POST /cart_items
   # POST /cart_items.json
   def create
-    @cart.add_item(params)
-    if @cart.save
-      if params[:commit] == "Add to Cart"
-        redirect_to cart_path(@cart.id)
-      elsif params[:commit] == "Buy Now"
+    params[:buy_now] = false
+    if params[:commit] == "Buy Now"
+      puts("88888888888888888*********** BUY NOW *****************8888888888888888888888")
+      params[:buy_now] = true
+      @cart.buy_now(params)
+      if @cart.save
         redirect_to checkout_path
+      end
+    elsif params[:commit] == "Add to Cart"
+      @cart.add_item(params)
+      if @cart.save
+        redirect_to cart_path(@cart.id)
       else
         redirect_to items_path
       end
     else
-      redirect_to items_path 
+      redirect_to items_path
     end
+
+  # def create
+  #   params[:buy_now] = false
+  #   if params[:commit] == "Buy Now"
+  #       redirect_to checkout_path
+  #     params[:buy_now] = true
+  #     @cart.buy_now(params)
+  #     if @cart.save
+
+  #   else
+  #     @cart.add_item(params)
+  #   end
+  #   if @cart.save
+  #     if params[:commit] == "Add to Cart"
+  #       redirect_to cart_path(@cart.id)
+  #     elsif params[:commit] == "Buy Now"
+  #       puts("88888888888888888888888888888888888*************************88888888888888888888888888888888888")
+  #       if current_user.credit_cards.size == 0
+  #         puts("...................... USER DOES NOT HAVE CREDIT CARD ...................")
+  #       else
+  #         puts("...................... USER HAS CREDIT CARD ...................")
+  #       end
+  #       redirect_to checkout_path
+  #     else
+  #       redirect_to items_path
+  #     end
+  #   else
+  #     redirect_to items_path
+  #   end
 
 
     # @cart_item = CartItem.new(cart_item_params)

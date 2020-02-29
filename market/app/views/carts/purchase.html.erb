@@ -22,19 +22,35 @@
   </thead>
   <tbody>
   <% total_price = 0 %>
-  <% @items.each do |cartitem| %>
-    <% item = Item.find(cartitem.item_id) %>
+  <% if @items.find {|item| item["buy_now"] == true} %>
+    <% puts("CHECKING FOR BUY NOW") %>
+    <% buy_now_cart_item = @items.find {|item| item["buy_now"] == true} %>
+    <% item = Item.find(buy_now_cart_item.item_id) %>
     <tr>
       <td><img height="50px" style="object-fit: contain" src="<%= item.image %>"></td>
       <td align="center"><strong><%= item.name %></strong></td>
-      <td align="center"><%= cartitem.quantity %></td>
-      <td align="center">$<%= cost = item.cost * cartitem.quantity %></td>
-      <td align="center">$<%= tax = ((item.cost * cartitem.quantity) * (item.tax_slab.to_f)/100).round(2) %></td>
+      <td align="center"><%= buy_now_cart_item.quantity %></td>
+      <td align="center">$<%= cost = item.cost * buy_now_cart_item.quantity %></td>
+      <td align="center">$<%= tax = ((item.cost * buy_now_cart_item.quantity) * (item.tax_slab.to_f)/100).round(2) %></td>
       <td align="center">$<%= discount = current_user.age(current_user.dob) >= 65 ? ((cost + tax) * 0.1).round(2) : 0.00 %></td>
       <td align="center">$<% total_price += cost + tax - discount %><%= cost + tax - discount %></td>
     </tr>
-  <% end %>
   </tbody>
+  <% else %>
+    <% @items.each do |cartitem| %>
+      <% item = Item.find(cartitem.item_id) %>
+      <tr>
+        <td><img height="50px" style="object-fit: contain" src="<%= item.image %>"></td>
+        <td align="center"><strong><%= item.name %></strong></td>
+        <td align="center"><%= cartitem.quantity %></td>
+        <td align="center">$<%= cost = item.cost * cartitem.quantity %></td>
+        <td align="center">$<%= tax = ((item.cost * cartitem.quantity) * (item.tax_slab.to_f)/100).round(2) %></td>
+        <td align="center">$<%= discount = current_user.age(current_user.dob) >= 65 ? ((cost + tax) * 0.1).round(2) : 0.00 %></td>
+        <td align="center">$<% total_price += cost + tax - discount %><%= cost + tax - discount %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  <% end %>
 </table>
 
 <h4>You will be charged: $<%= total_price %></h4>
@@ -59,6 +75,11 @@
     </tbody>
   </table>
 <% else %>
+<% if @items.find {|item| item["buy_now"] == true} %>
+    <% puts("CREDIT CARD CHECK FOR BUY NOW") %>
+    <% buy_now_cart_item = @items.find {|item| item["buy_now"] == true} %>
+    <% buy_now_cart_item.destroy%>
+<% end %>
 <h5>Could not find an active credit card in your profile</h5>
 <%= link_to 'Click here to add a new credit card', new_credit_card_path %>
 <% end %>

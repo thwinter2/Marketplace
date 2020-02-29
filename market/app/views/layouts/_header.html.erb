@@ -23,7 +23,10 @@
               <% if CartItem.where(cart_id: cart.id).size > 0 %>
                 <% cart_sum = 0 %>
                 <% CartItem.where(cart_id: cart.id).each do |item| %>
-                  <% cart_sum += item.quantity %>
+                  <% puts(item.buy_now) %>
+                  <% if not item.buy_now %>
+                    <% cart_sum += item.quantity %>
+                  <% end %>
                 <% end %>
                 <span class="badge badge-danger"><%= cart_sum %></span>
               <% end %>

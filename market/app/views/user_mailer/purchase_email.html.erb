@@ -28,17 +28,31 @@
       </thead>
       <tbody>
       <% total_price = 0 %>
-      <% CartItem.where(cart_id: params[:cart].id).each do |cartitem| %>
-        <% item = Item.find(cartitem.item_id) %>
+      <% if params[:buy_now_item] %>
+        <% buy_now_cart_item = params[:buy_now_item] %>
+        <% item = Item.find(buy_now_cart_item.item_id) %>
         <tr>
           <td><img height="50px" style="object-fit: contain" src="<%= item.image %>"></td>
           <td align="center"><strong><%= item.name %></strong></td>
-          <td align="center"><%= cartitem.quantity %></td>
-          <td align="center">$<%= cost = item.cost * cartitem.quantity %></td>
-          <td align="center">$<%= tax = ((item.cost * cartitem.quantity) * (item.tax_slab.to_f)/100).round(2) %></td>
+          <td align="center"><%= buy_now_cart_item.quantity %></td>
+          <td align="center">$<%= cost = item.cost * buy_now_cart_item.quantity %></td>
+          <td align="center">$<%= tax = ((item.cost * buy_now_cart_item.quantity) * (item.tax_slab.to_f)/100).round(2) %></td>
           <td align="center">$<%= discount = params[:user].age(params[:user].dob) >= 65 ? ((cost + tax) * 0.1).round(2) : 0.00 %></td>
           <td align="center">$<% total_price += cost + tax - discount %><%= cost + tax - discount %></td>
         </tr>
+      <% else %>
+        <% CartItem.where(cart_id: params[:cart].id).each do |cartitem| %>
+          <% item = Item.find(cartitem.item_id) %>
+          <tr>
+            <td><img height="50px" style="object-fit: contain" src="<%= item.image %>"></td>
+            <td align="center"><strong><%= item.name %></strong></td>
+            <td align="center"><%= cartitem.quantity %></td>
+            <td align="center">$<%= cost = item.cost * cartitem.quantity %></td>
+            <td align="center">$<%= tax = ((item.cost * cartitem.quantity) * (item.tax_slab.to_f)/100).round(2) %></td>
+            <td align="center">$<%= discount = params[:user].age(params[:user].dob) >= 65 ? ((cost + tax) * 0.1).round(2) : 0.00 %></td>
+            <td align="center">$<% total_price += cost + tax - discount %><%= cost + tax - discount %></td>
+          </tr>
+        <% end %>
       <% end %>
       </tbody>
     </table>
