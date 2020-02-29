@@ -125,6 +125,8 @@ ActiveRecord::Schema.define(version: 2020_02_29_163629) do
     t.datetime "remember_created_at"
     t.boolean "admin"
     t.string "street_addres"
+    t.string "provider"
+    t.string "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
