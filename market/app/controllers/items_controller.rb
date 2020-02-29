@@ -119,9 +119,6 @@ class ItemsController < ApplicationController
 
   # Verify otp (PUT operation)
   def verify_otp
-    puts(params[:otp])
-    puts("------------")
-    ## TODO
     respond_to do |format|
       if params[:otp]
         PurchaseHistory.create(@item)

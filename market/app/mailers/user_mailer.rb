@@ -36,19 +36,4 @@ class UserMailer < ApplicationMailer
       format.html
     end
   end
-
-  ## Email for when items become available in wishlist
-  def wishlist_email(user_email)
-  	## To be implemented
-    puts("--------------Wishlist Mailer--------")
-    # @otp  = "123456"
-    # mail(to: user_email, subject: 'Wishlist item/s available to buy!!!')
-  end
-
-  ## Email for when returned items request is approved
-  def return_approval_email
-  	## To be implemented
-    # @url  = 'http://example.com/login'
-    # mail(to: @email, subject: 'Returned Items Request Approved')
-  end
 end

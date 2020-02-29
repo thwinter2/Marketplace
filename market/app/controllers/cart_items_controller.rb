@@ -27,7 +27,6 @@ class CartItemsController < ApplicationController
   def create
     params[:buy_now] = false
     if params[:commit] == "Buy Now"
-      puts("88888888888888888*********** BUY NOW *****************8888888888888888888888")
       params[:buy_now] = true
       @cart.buy_now(params)
       if @cart.save
@@ -59,7 +58,6 @@ class CartItemsController < ApplicationController
   #     if params[:commit] == "Add to Cart"
   #       redirect_to cart_path(@cart.id)
   #     elsif params[:commit] == "Buy Now"
-  #       puts("88888888888888888888888888888888888*************************88888888888888888888888888888888888")
   #       if current_user.credit_cards.size == 0
   #         puts("...................... USER DOES NOT HAVE CREDIT CARD ...................")
   #       else
