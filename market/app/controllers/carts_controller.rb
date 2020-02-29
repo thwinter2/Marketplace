@@ -97,8 +97,14 @@ class CartsController < ApplicationController
     if params[:cvv].to_s == CreditCard.find_by(card_num: params[:number]).card_cvv.to_s
       notice = @cart.buy_items
       if CartItem.where(cart_id: @cart.id).size > 0
-        UserMailer.with(user: current_user, cart: @cart).purchase_email(current_user.email, @cart).deliver_now
-        @cart.clear
+        cart_items = CartItem.where(cart_id: @cart.id)
+        buy_now_cart_item = cart_items.find {|item| item["buy_now"] == true} ## In case its a buy now item
+        UserMailer.with(user: current_user, cart: @cart, buy_now_item: buy_now_cart_item).purchase_email(current_user.email, @cart).deliver_now
+        if buy_now_cart_item
+          buy_now_cart_item.destroy ##Removing buy now item entry from cart
+        else
+          @cart.clear
+        end
       else
         notice += 'Unfortunately, no purchases could be made at this time. '
       end

@@ -24,6 +24,9 @@
     <% total_price = 0 %>
     <% CartItem.where(cart_id: @cart.id).each do |cartitem| %>
       <% item = Item.find(cartitem.item_id) %>
+      <% if cartitem.buy_now %>
+        <% cartitem.destroy %>
+      <% end %>
       <tr>
         <td><img height="50px" style="object-fit: contain" src="<%= item.image %>"></td>
         <td align="center"><strong><%= item.name %></strong></td>
