@@ -41,7 +41,7 @@
         <%= link_to 'Edit', edit_item_path(@item), :class => 'btn btn-secondary ml-4' %>
         <%= link_to 'Destroy', @item, method: :delete, data: { confirm: 'Are you sure?' }, :class => 'btn btn-secondary mx-1' %>
       <% end %>
-      <% if @item.quantity > 0 %>
+      <% if !@item.quantity.nil? and @item.quantity > 0 %>
         <%= form_tag(cart_items_path(item: {user_id: current_user.id, item_id: @item.id}), method: :post) do %>
           <%= label_tag(:quantity, "Quantity: ") %>
           <%= number_field_tag(:quantity, 1, min: 1, max: @item.quantity) %>
