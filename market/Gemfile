@@ -59,6 +59,7 @@ gem 'jquery-rails'
 
 # Devise Authentication
 gem 'devise'
+gem 'omniauth-facebook'
 
 # One time password
 gem 'rotp'
