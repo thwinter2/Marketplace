@@ -8,7 +8,7 @@
 <p>
   <% purchase_history = params[:purchase_history] %>
   <% item = Item.find(purchase_history.item_id) %>
-  <% taxed_cost = purchase_history.quantity * item.cost * 1.07 %> <!-- TODO: Tax -->
+  <% taxed_cost = purchase_history.quantity * item.cost * (1 + (item.tax_slab.to_f)/100) %> <!-- TODO: Tax -->
   <% discount = params[:user].age(params[:user].dob) >= 65 ? taxed_cost * 0.1 : 0 %>
   <% if purchase_history.status == 'Return Approved' %>
     An administrator has approved your return of <%= purchase_history.quantity %> <%= item.name %><%= purchase_history.quantity > 1 ? 's' : '' %>! You have been
