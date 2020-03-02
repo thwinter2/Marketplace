@@ -22,3 +22,4 @@
 - What will happen if admin deletes an item which is purchased by several people or it exists in their cart?
 
 	If an admin deletes an item, which is purchased by several people, then the purchase record related to that item will be removed from purchase history, and the application will function without any error. However, if the item exists in someone's cart, then the application throws an error while viewing the cart (`/views/carts/show.html.erb`) because the `item_id` is not available.
+	If an admin edits the quantity of an item that has a user subscribed to its availability, and that user has been deleted, the application will throw an error when trying to update that quantity. Following the testing of this edge case, it is recommended that you test any other editing of quantity on an item that is either newly created, or does not have a subscribed user that has been deleted.
