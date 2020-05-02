@@ -1,0 +1,44 @@
+<%= form_with(model: credit_card, local: true) do |form| %>
+  <% if credit_card.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(credit_card.errors.count, "error") %> prohibited this credit_card from being saved:</h2>
+
+      <ul>
+        <% credit_card.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :user_id %>:
+    <%= current_user.id %>
+    <%= form.hidden_field :user_id, value: current_user.id%>
+  </div>
+
+  <div class="field">
+    <%= form.label :card_name, "Name on Card" %><br />
+    <%= form.text_field :card_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :card_num, "Card Number" %><br />
+    <%= form.number_field :card_num %>
+  </div>
+
+  <div class="field">
+    <%= form.label :card_experation, "Card Expiration (mm/yy)" %><br />
+    <%= form.text_field :card_experation %>
+  </div>
+  <p></p>
+
+  <div class="field">
+    <%= form.label :card_cvv, "CVV" %><br />
+    <%= form.number_field :card_cvv %>
+  </div>
+  <p></p>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

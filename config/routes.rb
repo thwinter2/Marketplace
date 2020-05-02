@@ -1,0 +1,30 @@
+Rails.application.routes.draw do
+  resources :cart_items
+  devise_for :users, controllers: {:registrations => "registrations", omniauth_callbacks: 'omniauth_callbacks'}
+  resources :wishlists
+  resources :credit_cards
+  resources :carts do
+    collection do
+      get 'clear'
+    end
+  end
+  resources :items do
+
+  end
+  resources :users
+  resources :feedbacks
+  resources :purchase_histories
+
+  get '/buy_now', to: 'items#buy_now', as: 'button'
+  get '/checkout', to: 'carts#checkout', as: 'checkout'
+  get '/purchase', to: 'carts#purchase', as: 'purchase'
+  post 'process_purchase', to: 'carts#process_purchase', as: 'process_purchase'
+  post '/verify_otp', to: 'items#verify_otp', as: 'verify_otp'
+  get '/requests', to: 'purchase_histories#requests', as: 'requests'
+  post '/admin_response', to: 'purchase_histories#admin_response', as: 'admin_response'
+  get '/return_requests', to: 'purchase_histories#return_requests', as: 'return_requests'
+  get '/subscribe_to_availability', to: 'items#subscribe_to_availability', as: 'subscribe_to_availability'
+
+  root 'items#index'
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+end

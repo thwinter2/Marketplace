@@ -1,0 +1,74 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %><br />
+    <%= form.text_field :name %>
+  </div>
+
+  <%if !(user.admin?) %>
+    <div class="field">
+      <%= form.label :email %><br />
+      <%= form.text_field :email %>
+    </div>
+
+    <div class="field">
+      <%= form.label :password, "New Password (6 Characters Minimum)" %><br />
+      <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+      <% end %>
+      <%= form.password_field :password, autofocus: true, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :password_confirmation, "Confirm New Password" %><br />
+      <%= form.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+  <% end%>
+
+  <div class="field">
+    <%= form.label :phone, "Phone Number (XXX-XXX-XXXX)" %><br />
+    <%= form.text_field :phone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dob, "Date of Birth" %><br />
+    <%= form.date_field :dob, max: Date.today %>
+  </div>
+
+  <div class="field">
+    <%= form.label :street_addres, "Street Address" %><br />
+    <%= form.text_field :street_addres %>
+  </div>
+
+  <div class="field">
+    <%= form.label :city %><br />
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="field">
+    <%= form.label :state %><br />
+    <%= form.select(:state, options_for_select(us_states)) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :zip, "Zip Code" %><br />
+    <%= form.text_field :zip %>
+  </div>
+  <p>
+  </p>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

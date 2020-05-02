@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  email: MyString
+  password: MyString
+  phone: MyString
+  dob: 2020-02-15
+  street_address: MyString
+  city: MyString
+  state: MyString
+  zip: 1
+  card_name: MyString
+  card_num: 1
+  card_expiration: 2020-02-15
+  card_cvv: 1
+  cart: MyString
+  wishlist: MyString
+
+two:
+  name: MyString
+  email: MyString
+  password: MyString
+  phone: MyString
+  dob: 2020-02-15
+  street_address: MyString
+  city: MyString
+  state: MyString
+  zip: 1
+  card_name: MyString
+  card_num: 1
+  card_expiration: 2020-02-15
+  card_cvv: 1
+  cart: MyString
+  wishlist: MyString

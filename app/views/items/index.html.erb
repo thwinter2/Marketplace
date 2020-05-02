@@ -1,0 +1,77 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Items</h1>
+<nav class="navbar navbar-expand-lg">
+  <% if user_signed_in? and current_user.admin? %>
+    <%= link_to "New Item", new_item_path, :class => 'btn btn-secondary' %>
+  <% end %>
+  <%= link_to '<i class="fa fa-sort-amount-desc"> Cost</i>'.html_safe,
+              items_path(order_by: 'cost DESC'), :class => 'nav-link btn btn-primary ml-auto', :style => 'margin: 5px' %>
+  <%= link_to '<i class="fa fa-sort-amount-asc"> Cost</i>'.html_safe,
+              items_path(order_by: 'cost ASC'), :class => 'nav-link btn btn-primary', :style => 'margin: 5px' %>
+  <%= link_to '<i class="fa fa-sort-amount-desc"> Popularity</i>'.html_safe,
+              items_path(order_by: 'views_count DESC'), :class => 'nav-link btn btn-primary', :style => 'margin: 5px'  %>
+  <%= link_to '<i class="fa fa-sort-amount-asc"> Popularity</i>'.html_safe,
+              items_path(order_by: 'views_count ASC'), :class => 'nav-link btn btn-primary', :style => 'margin: 5px'  %>
+</nav>
+
+<nav class="navbar navbar-expand-lg row">
+  <div class="d-inline">
+    <% category_select_options = [] %>
+    <% Item.where("category != ''").each do |item| %>
+      <% category_select_options.push item.category %>
+    <% end %>
+    <%= form_tag(items_path, method: :get) do %>
+      <%= label_tag(:search_category, "Category: ") %>
+      <%= select_tag :search_category, options_for_select(category_select_options.uniq), include_blank: true %>
+      <%= submit_tag("Filter by Category", class: 'btn btn-primary') %>
+    <% end %>
+  </div>
+  <div class="d-inline" style="padding-left: 15px">
+    <% brand_select_options = [] %>
+    <% Item.where("brand != ''").each do |item| %>
+      <% brand_select_options.push item.brand %>
+    <% end %>
+    <%= form_tag(items_path, method: :get) do %>
+      <%= label_tag(:search_brand, "Brand: ") %>
+      <%= select_tag :search_brand, options_for_select(brand_select_options.uniq), include_blank: true %>
+      <%= submit_tag("Filter by Brand", class: 'btn btn-primary') %>
+    <% end %>
+  </div>
+  <div class="d-inline" style="padding-left: 15px">
+    <%= form_tag(items_path, method: :get) do %>
+      <%= label_tag(:search_availability, "In Stock?: ") %>
+      <%= check_box_tag(:search_availability) %>
+      <%= submit_tag("Filter by Availability", class: 'btn btn-primary') %>
+    <% end %>
+  </div>
+  <div style="padding-left: 50px">
+    <a href="<%= items_path %>" class="btn btn-primary">Clear Filters</a>
+  </div>
+</nav>
+
+<div class="row row-cols-1 row-cols-md-4">
+  <% @items.each do |item| %>
+    <div class="col mb-4">
+      <div class="card h-100 border-primary">
+        <div class="card-header"><img class="card-img-top" height="200px" style="object-fit: contain" src="<%= item.image %>"></div>
+        <div class="card-body">
+          <h5 class="card-title"><strong><%= item.name %></strong></h5>
+          <% if item.age_restricted %>
+            <span class="card-subtitle badge badge-info">Age Restricted</span>
+          <% end %>
+          <% if item.special_item %>
+            <span class="card-subtitle badge badge-info">Special Item</span>
+          <% end %>
+          <p class="card-text" style="height: 150px; overflow: auto"><%= item.description %></p>
+        </div>
+        <div class="card-footer" style="text-align: center">
+          <h6 class="card-text">
+            $<%= number_with_precision(item.cost, :precision => 2, :delimiter => ',') %>
+          </h6>
+          <a href="<%= item_path(item) %>" class="btn btn-primary form-inline stretched-link">Details</a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

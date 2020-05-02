@@ -1,0 +1,37 @@
+<%= form_with(model: feedback, local: true) do |form| %>
+  <% if feedback.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(feedback.errors.count, "error") %> prohibited this feedback from being saved:</h2>
+
+      <ul>
+        <% feedback.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if user_signed_in? %>
+    <div class="field form-group">
+      <%= form.label "User Email" %>:
+      <%= User.find(current_user.id).email %>
+      <%= form.hidden_field :email, value: User.find(current_user.id).email %>
+    </div>
+  <% else %>
+    <div class="field form-group">
+      <%= form.label :email, "Please Provide Your Email Address" %><br>
+      <%= form.text_field :email %>
+    </div>
+  <% end %>
+
+  <div class="field form-group">
+    <%= form.label :note, "Feedback" %><br />
+    <%= form.text_area :note %>
+  </div>
+  
+  <p>
+    <div class="actions">
+      <%= form.submit %>
+    </div>
+  </p>
+<% end %>
